@@ -1,6 +1,26 @@
 # RNA seq. Pipeline
 
-Login info: 
+Login info: **ssh aadas@bluemoon-user2.uvm.edu**
+
+### Location of our file (*Brachyleytrum aristosum* data)
+
+**Treatment:** There are three replicates for "pre-treatment" (1-3x), three for 24 h cold shock (4-6y), and two for 6 wk cold (7-8z). Not the perfect data set but okay given the species.
+
+```
+[aadas@bluemoon-user2 ~]$ cd /gpfs2/scratch/djshirle/MPS/170216_SNL128_0151_AHC72LBCXY/samples_out/
+[aadas@bluemoon-user2 samples_out]$ ll
+total 144
+-rw-r--r-- 1 djshirle usr 2504 Feb 24 16:16 170216_demux_sheet-Preston.csv.quality_table_by_lane.txt
+-rw-r--r-- 1 djshirle usr 2488 Feb 24 16:16 170216_demux_sheet-Preston.csv.quality_table_by_sample.txt
+drwxr-xr-x 4 djshirle usr 8192 Feb 24 16:11 Ba1x
+drwxr-xr-x 4 djshirle usr 8192 Feb 24 15:58 Ba2x
+drwxr-xr-x 4 djshirle usr 8192 Feb 24 16:04 Ba3x
+drwxr-xr-x 4 djshirle usr 8192 Feb 24 15:59 Ba4y
+drwxr-xr-x 4 djshirle usr 8192 Feb 24 16:06 Ba5y
+drwxr-xr-x 4 djshirle usr 8192 Feb 24 16:00 Ba6y
+drwxr-xr-x 4 djshirle usr 8192 Feb 24 16:03 Ba7z
+drwxr-xr-x 4 djshirle usr 8192 Feb 24 15:58 Ba8z
+```
 
 
 
