@@ -22,7 +22,7 @@ drwxr-xr-x 4 djshirle usr 8192 Feb 24 16:03 Ba7z
 drwxr-xr-x 4 djshirle usr 8192 Feb 24 15:58 Ba8z
 ```
 
-Let's open Ba1x
+#### Let's open Ba1x folder "pre-treatment" (1x)
 
 ```
 [aadas@bluemoon-user2 samples_out]$ cd Ba1x/
