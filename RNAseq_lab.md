@@ -1,5 +1,7 @@
 # RNA seq. Pipeline
 
+### Author: Aayudh Das
+
 Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 ### Location of our file (*Brachyleytrum aristosum* data)
@@ -37,6 +39,14 @@ drwxr-xr-x 4 djshirle usr        512 Feb 24 16:10 jcpresto_BrArisVR_20170217_Ba1
 -rw-r--r-- 1 djshirle usr 5517001528 Feb 24 15:45 jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz
 -rw-r--r-- 1 djshirle usr        157 Feb 24 15:46 jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz.md5sum
 ```
+
+#### To see the fastq.gz file
+
+```
+[aadas@bluemoon-user2 Ba1x]$ zcat jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz | head
+```
+
+
 
 
 
