@@ -22,6 +22,22 @@ drwxr-xr-x 4 djshirle usr 8192 Feb 24 16:03 Ba7z
 drwxr-xr-x 4 djshirle usr 8192 Feb 24 15:58 Ba8z
 ```
 
+Let's open Ba1x
+
+```
+[aadas@bluemoon-user2 samples_out]$ cd Ba1x/
+[aadas@bluemoon-user2 Ba1x]$ ll
+total 10661240
+drwxr-xr-x 4 djshirle usr        512 Feb 24 16:11 jcpresto_BrArisVR_20170217_Ba1x_R1_fastqc
+-rw-r--r-- 1 djshirle usr     197928 Feb 24 16:11 jcpresto_BrArisVR_20170217_Ba1x_R1_fastqc.zip
+-rw-r--r-- 1 djshirle usr 5399685374 Feb 24 15:41 jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz
+-rw-r--r-- 1 djshirle usr        157 Feb 24 15:43 jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz.md5sum
+drwxr-xr-x 4 djshirle usr        512 Feb 24 16:10 jcpresto_BrArisVR_20170217_Ba1x_R2_fastqc
+-rw-r--r-- 1 djshirle usr     201979 Feb 24 16:10 jcpresto_BrArisVR_20170217_Ba1x_R2_fastqc.zip
+-rw-r--r-- 1 djshirle usr 5517001528 Feb 24 15:45 jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz
+-rw-r--r-- 1 djshirle usr        157 Feb 24 15:46 jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz.md5sum
+```
+
 
 
 #### Trimming script 
