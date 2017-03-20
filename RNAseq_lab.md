@@ -219,3 +219,9 @@ check status
 [aadas@bluemoon-user2 Ba]$ showq -u aadas
 ```
 
+all jobs
+
+```
+[aadas@bluemoon-user2 Ba]$ showq
+```
+
