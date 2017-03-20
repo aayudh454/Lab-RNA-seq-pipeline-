@@ -14,7 +14,7 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 ------
 <div id='id-section1'/>
-### Page 1: 2017-03-20. Moving files, basics and trimming
+###Page 1: 2017-03-20. Moving files, basics and trimming
 
 #### 1. Where are our files?
 
