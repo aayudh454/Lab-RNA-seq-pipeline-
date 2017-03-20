@@ -104,7 +104,7 @@ total 10660840
 -rw-r--r-- 1 aadas usr 5517001528 Mar 20 12:25 Ba1x_precold.R2.fastq.gz
 ```
 
-#### 5. Now create a script for running the trimming program
+#### 6. Now create a script for running the trimming program
 
 you should be in your **Ba** folder 
 
@@ -193,7 +193,7 @@ $workDIR/Ba1x_precold_R1.trimmo.fq.gz $workDIR/Ba1x_precold.R1.unpaired.fq.gz $w
 
 for 1st pair one is paired named as R1.**trimmo** and R1.**unpaired**. same for the second pair.
 
-### 6. Make your script executable
+#### 7. Make your script executable
 
 you should be the folder where you saved your script
 
@@ -203,7 +203,7 @@ you should be the folder where you saved your script
 
 **700**=file's owner may read, write, and execute the file.
 
-### 7. Submit your job and check status of your job
+#### 8. Submit your job and check status of your job
 
 ```
 [aadas@bluemoon-user2 Ba]$ qsub trimmomatic.sh 
@@ -226,4 +226,4 @@ hang on there it's gonna take 6hrs. You can submit multiple jobs.
 <div id='id-section2'/>
 ### Page 2: 2017-03-21. Trimming Ba2x,Ba3x 
 
-kjkj
+
