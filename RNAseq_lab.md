@@ -46,10 +46,6 @@ drwxr-xr-x 4 djshirle usr        512 Feb 24 16:10 jcpresto_BrArisVR_20170217_Ba1
 [aadas@bluemoon-user2 Ba1x]$ zcat jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz | head
 ```
 
-
-
-
-
 #### Trimming script 
 
 ```
@@ -58,7 +54,7 @@ drwxr-xr-x 4 djshirle usr        512 Feb 24 16:10 jcpresto_BrArisVR_20170217_Ba1
 ######## This job needs 1 nodes, 2 processors total
 #PBS -l nodes=1:ppn=2
 # it needs to run for 6 hours
-#PBS -l walltime=06:00:00
+#PBS -l walltviime=06:00:00
 #PBS -N renamer
 #PBS -j oe
 #PBS -M YOUR_ACCOUNT@uvm.edu
@@ -74,5 +70,13 @@ cd $workDIR
 java -jar $SOFTWARE/trimmomatic-0.33.jar PE -phred33 $workDIR/Melica6weekcold01.R1.fq $workDIR/Melica6weekcold01.R2.fq $workDIR/Melica6weekcold01_R1.trimmo.fq $workDIR/Melica6weekcold01_R1.unpaired.fq $workDIR/Melica6weekcold01_R2.trimmo.fq $workDIR/Melica6weekcold01_R2.unpaired.fq ILLUMINACLIP:TruSeq3-PE-2.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:5:20 MINLEN:40
 ```
 
+### Mar 20: Jinshun Intro
 
+Transfer file
 
+```
+[aadas@bluemoon-user2 ~]$ cp -r /gpfs2/scratch/djshirle/MPS/170216_SNL128_0151_AHC72LBCXY/samples_out/* . &
+#cp=copy directory to directory (same PC)
+```
+
+ Input
