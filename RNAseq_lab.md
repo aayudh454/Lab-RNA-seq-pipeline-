@@ -189,11 +189,33 @@ iv. TRIMMING COMMANDS AND PARAMETERS
 
 a. change software version from as **trimmomatic-0.36**
 
-b. Now the first 2 files are your input file, so after $workDIR/"name of the file" space [here R1 and R2 is the main change]
+b. Now the **first 2 files are your input file**, so after $workDIR/"name of the file" space [here R1 and R2 is the main change]
 
-c. 
+c. Last 4 files are **output files**.  
 
+$workDIR/Ba1x_precold_R1.trimmo.fq.gz $workDIR/Ba1x_precold.R1.unpaired.fq.gz $workDIR/Ba1x_precold.R2.trimmo.fq.gz $workDIR/Ba1x_precold.R2.unpaired.fq.gz
 
+for 1st pair one is paired named as R1.**trimmo** and R1.**unpaired**. same for the second pair.
 
+### 6. Make your script executable
 
+you should be the folder where you saved your script
+
+```
+[aadas@bluemoon-user2 Ba]$ chmod 700 trimmomatic.sh
+```
+
+**700**=file's owner may read, write, and execute the file.
+
+### 7. Submit your job and check status of your job
+
+```
+[aadas@bluemoon-user2 Ba]$ qsub trimmomatic.sh 
+```
+
+check status
+
+```
+[aadas@bluemoon-user2 Ba]$ showq -u aadas
+```
 
