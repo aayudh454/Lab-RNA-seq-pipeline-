@@ -8,10 +8,9 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 **Treatment:** There are three replicates for "pre-treatment" (1-3x), three for 24 h cold shock (4-6y), and two for 6 wk cold (7-8z). Not the perfect data set but okay given the species.
 
-### Table of contents    
+## Table of contents    
 * [Page 1: 2017-03-20](#id-section1). Moving files and trimming 
-
-  ​
+* [Page 1: 2017-03-21](#id-section2). Trimming Ba2x,Ba3x 
 
 ------
 <div id='id-section1'/>
@@ -221,5 +220,7 @@ all jobs
 ```
 [aadas@bluemoon-user2 Ba]$ showq
 ```
-
 hang on there it's gonna take 6hrs. You can submit multiple jobs.
+-----
+<div id='id-section2'/>
+### Page 2: 2017-03-21. Trimming Ba2x,Ba3x 
