@@ -222,3 +222,4 @@ all jobs
 [aadas@bluemoon-user2 Ba]$ showq
 ```
 
+hang on there it's gonna take 6hrs. You can submit multiple jobs.
