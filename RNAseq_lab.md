@@ -73,6 +73,38 @@ then you will see Trimmomatic-0.36 in your directory
 
 my new folder is Ba
 
+#### 5. Let's see what files are present in Ba1x folder "pre-treatment" (1x)
+
+```
+[aadas@bluemoon-user2 ~]$ cd Ba1x/
+[aadas@bluemoon-user2 Ba1x]$ ll
+total 10661240
+drwxr-xr-x 4 aadas usr        512 Mar 20 11:57 jcpresto_BrArisVR_20170217_Ba1x_R1_fastqc
+-rw-r--r-- 1 aadas usr     197928 Mar 20 11:57 jcpresto_BrArisVR_20170217_Ba1x_R1_fastqc.zip
+-rw-r--r-- 1 aadas usr 5399685374 Mar 20 11:56 jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz
+-rw-r--r-- 1 aadas usr        157 Mar 20 11:56 jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz.md5sum
+drwxr-xr-x 4 aadas usr        512 Mar 20 11:57 jcpresto_BrArisVR_20170217_Ba1x_R2_fastqc
+-rw-r--r-- 1 aadas usr     201979 Mar 20 11:57 jcpresto_BrArisVR_20170217_Ba1x_R2_fastqc.zip
+-rw-r--r-- 1 aadas usr 5517001528 Mar 20 11:57 jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz
+-rw-r--r-- 1 aadas usr        157 Mar 20 11:57 jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz.md5sum
+```
+
+Now you need **R1.fastq.gz** and  **R2.fastq.gz** files, so copy them to your Ba folder. **../Ba/** = this means your are moving to Ba folder. **Ba1x_precold.R1.fastq.gz** is the new name.
+
+```
+[aadas@bluemoon-user2 Ba1x]$ cp jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz ../Ba/Ba1x_precold.R1.fastq.gz
+[aadas@bluemoon-user2 Ba1x]$ cp jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz ../Ba/Ba1x_precold.R2.fastq.gz
+```
+
+Now in your Ba folder you have both the R1 and R2 files-
+
+```
+[aadas@bluemoon-user2 Ba]$ ll
+total 10660840
+-rw-r--r-- 1 aadas usr 5399685374 Mar 20 12:21 Ba1x_precold.R1.fastq.gz
+-rw-r--r-- 1 aadas usr 5517001528 Mar 20 12:25 Ba1x_precold.R2.fastq.gz
+```
+
 #### 5. Now create a script for running the trimming program
 
 you should be in your **Ba** folder 
@@ -151,50 +183,17 @@ first part of the script explains that details
 
 ii. Now you need to specify where your software is present i.e. the Trimmomatic-0.36 which is in your main directory **/users/a/a/aadas/Trimmomatic-0.36**
 
-iii. Specify your working directory-**/users/a/a/aadas/Ba**
+iii. Specify your working directory-**/users/a/a/aadas/Ba** (because your R1 and R2 files are in Ba)
+
+iv. TRIMMING COMMANDS AND PARAMETERS
+
+a. change software version from as **trimmomatic-0.36**
+
+b. Now the first 2 files are your input file, so after $workDIR/"name of the file" space [here R1 and R2 is the main change]
+
+c. 
 
 
 
 
-
-#### Let's see what files are present in Ba1x folder "pre-treatment" (1x)
-
-```
-[aadas@bluemoon-user2 ~]$ cd Ba1x/
-[aadas@bluemoon-user2 Ba1x]$ ll
-total 10661240
-drwxr-xr-x 4 djshirle usr        512 Feb 24 16:11 jcpresto_BrArisVR_20170217_Ba1x_R1_fastqc
--rw-r--r-- 1 djshirle usr     197928 Feb 24 16:11 jcpresto_BrArisVR_20170217_Ba1x_R1_fastqc.zip
--rw-r--r-- 1 djshirle usr 5399685374 Feb 24 15:41 jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz
--rw-r--r-- 1 djshirle usr        157 Feb 24 15:43 jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz.md5sum
-drwxr-xr-x 4 djshirle usr        512 Feb 24 16:10 jcpresto_BrArisVR_20170217_Ba1x_R2_fastqc
--rw-r--r-- 1 djshirle usr     201979 Feb 24 16:10 jcpresto_BrArisVR_20170217_Ba1x_R2_fastqc.zip
--rw-r--r-- 1 djshirle usr 5517001528 Feb 24 15:45 jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz
--rw-r--r-- 1 djshirle usr        157 Feb 24 15:46 jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz.md5sum
-```
-
-
-
-
-
-
-
-
-
-
-
-#### To see the fastq.gz file
-
-```
-[aadas@bluemoon-user2 Ba1x]$ zcat jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz | head
-```
-
-### Mar 20: Jinshun Intro
-
-Transfer file
-
-```
-[aadas@bluemoon-user2 ~]$ cp -r /gpfs2/scratch/djshirle/MPS/170216_SNL128_0151_AHC72LBCXY/samples_out/* . &
-#cp=copy directory to directory (same PC)
-```
 
