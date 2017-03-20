@@ -4,9 +4,20 @@
 
 Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
-### Location of our file (*Brachyleytrum aristosum* data)
+### Data structure (*Brachyleytrum aristosum* data)
 
 **Treatment:** There are three replicates for "pre-treatment" (1-3x), three for 24 h cold shock (4-6y), and two for 6 wk cold (7-8z). Not the perfect data set but okay given the species.
+
+### Table of contents    
+* [Page 1: 2017-03-20](#id-section1). Moving files and trimming 
+
+  ​
+
+------
+<div id='id-section1'/>
+### Page 1: 2017-03-20. Moving files, basics and trimming
+
+
 
 ```
 [aadas@bluemoon-user2 ~]$ cd /gpfs2/scratch/djshirle/MPS/170216_SNL128_0151_AHC72LBCXY/samples_out/
@@ -79,4 +90,3 @@ Transfer file
 #cp=copy directory to directory (same PC)
 ```
 
- Input
