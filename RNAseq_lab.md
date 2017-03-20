@@ -17,7 +17,7 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 <div id='id-section1'/>
 ### Page 1: 2017-03-20. Moving files, basics and trimming
 
-#### Where are our files?
+#### 1. Where are our files?
 
 After login you should **cd** space the location path. **ll** to see what are the files present
 
@@ -37,7 +37,7 @@ drwxr-xr-x 4 djshirle usr 8192 Feb 24 16:03 Ba7z
 drwxr-xr-x 4 djshirle usr 8192 Feb 24 15:58 Ba8z
 ```
 
-#### How can you move all the files to your own directory from the server?
+#### 2. How can you move all the files to your own directory from the server?
 
 ```
 [aadas@bluemoon-user2 ~]$ cp -r /gpfs2/scratch/djshirle/MPS/170216_SNL128_0151_AHC72LBCXY/samples_out/* . &
@@ -45,7 +45,27 @@ drwxr-xr-x 4 djshirle usr 8192 Feb 24 15:58 Ba8z
 
 cp=copy, *= means everything (for individual file just write the name of the file instead of *)
 
-#### Create a new folder (command=mkdir) where you will execute all your analysis
+#### 3. You need to install trimmomatic in your PC
+
+go to http://www.usadellab.org/cms/?page=trimmomatic
+
+right click on binary and copy link address 
+
+```
+[aadas@bluemoon-user2 ~]$ wget -c http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.36.zip
+```
+
+Now it's downloaded to your main directory as a zip file (Trimmomatic-0.36.zip)
+
+you need to **unzip**
+
+```
+[aadas@bluemoon-user2 ~]$ unzip Trimmomatic-0.36.zip 
+```
+
+then you will see Trimmomatic-0.36 in your directory
+
+#### 4. Create a new folder (command=mkdir) where you will execute all your analysis
 
 ```
 [aadas@bluemoon-user2 ~]$ mkdir Ba
@@ -53,7 +73,7 @@ cp=copy, *= means everything (for individual file just write the name of the fil
 
 my new folder is Ba
 
-### Now create a script for running the trimming program 
+#### 5. Now create a script for running the trimming program
 
 you should be in your **Ba** folder 
 
@@ -95,6 +115,45 @@ java -jar $SOFTWARE/trimmomatic-0.33.jar PE -phred33 $workDIR/Melica6weekcold01.
 ```
 
 and **esc**, **:wq** to save and quit. 
+
+look how I edited the things
+
+```
+[aadas@bluemoon-user2 Ba]$ vi trimmomatic.sh 
+
+#!/bin/bash
+
+######## This job needs 1 nodes, 2 processors total
+#PBS -l nodes=1:ppn=2
+# it needs to run for 6 hours
+#PBS -l walltime=06:00:00
+#PBS -N renamer
+#PBS -j oe
+#PBS -M aadas@uvm.edu
+#PBS -m bea
+###LOAD JAVA MODULE AVAILABLE FROM THE CLUSTER, YOU MAY WANT TO CHECK FIRST
+module load java-sdk/sun-jdk-1.6.0.12
+ulimit -s unlimited
+###CHANGE THE DIRECTORY ACCORDINGLY, THE FOLLOWING SETTINGS ARE FOR MY ACCOUNT
+SOFTWARE=/users/a/a/aadas/Trimmomatic-0.36
+workDIR=/users/a/a/aadas/Ba
+cd $workDIR
+#####TRIMMING COMMANDS AND PARAMETERS
+java -jar $SOFTWARE/trimmomatic-0.36.jar PE -phred33 $workDIR/Ba1x_precold.R1.fastq.gz $workDIR/Ba1x_precold.R2.fastq.gz $workDIR/Ba1x_precold_R1.trimmo.fq.gz $workDIR/Ba1x_precold.R1.unpaired.fq.gz $workDIR/Ba1x_precold.R2.trimmo.fq.gz $workDIR/Ba1x_precold.R2.unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE-2.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:5:20 MINLEN:40
+~ 
+```
+
+i. You need to check **Submitting Jobs to the Cluster**-
+
+https://www.uvm.edu/~vacc/?Page=userguide.php
+
+first part of the script explains that details
+
+ii. Now you need to specify where your software is present i.e. the Trimmomatic-0.36 which is in your main directory **/users/a/a/aadas/Trimmomatic-0.36**
+
+iii. Specify your working directory-**/users/a/a/aadas/Ba**
+
+
 
 
 
