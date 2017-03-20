@@ -17,7 +17,9 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 <div id='id-section1'/>
 ### Page 1: 2017-03-20. Moving files, basics and trimming
 
+#### Where are our files?
 
+After login you should **cd** space the location path. **ll** to see what are the files present
 
 ```
 [aadas@bluemoon-user2 ~]$ cd /gpfs2/scratch/djshirle/MPS/170216_SNL128_0151_AHC72LBCXY/samples_out/
@@ -35,29 +37,40 @@ drwxr-xr-x 4 djshirle usr 8192 Feb 24 16:03 Ba7z
 drwxr-xr-x 4 djshirle usr 8192 Feb 24 15:58 Ba8z
 ```
 
-#### Let's open Ba1x folder "pre-treatment" (1x)
+#### How can you move all the files to your own directory from the server?
 
 ```
-[aadas@bluemoon-user2 samples_out]$ cd Ba1x/
-[aadas@bluemoon-user2 Ba1x]$ ll
-total 10661240
-drwxr-xr-x 4 djshirle usr        512 Feb 24 16:11 jcpresto_BrArisVR_20170217_Ba1x_R1_fastqc
--rw-r--r-- 1 djshirle usr     197928 Feb 24 16:11 jcpresto_BrArisVR_20170217_Ba1x_R1_fastqc.zip
--rw-r--r-- 1 djshirle usr 5399685374 Feb 24 15:41 jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz
--rw-r--r-- 1 djshirle usr        157 Feb 24 15:43 jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz.md5sum
-drwxr-xr-x 4 djshirle usr        512 Feb 24 16:10 jcpresto_BrArisVR_20170217_Ba1x_R2_fastqc
--rw-r--r-- 1 djshirle usr     201979 Feb 24 16:10 jcpresto_BrArisVR_20170217_Ba1x_R2_fastqc.zip
--rw-r--r-- 1 djshirle usr 5517001528 Feb 24 15:45 jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz
--rw-r--r-- 1 djshirle usr        157 Feb 24 15:46 jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz.md5sum
+[aadas@bluemoon-user2 ~]$ cp -r /gpfs2/scratch/djshirle/MPS/170216_SNL128_0151_AHC72LBCXY/samples_out/* . &
 ```
 
-#### To see the fastq.gz file
+cp=copy, *= means everything (for individual file just write the name of the file instead of *)
+
+#### Create a new folder (command=mkdir) where you will execute all your analysis
 
 ```
-[aadas@bluemoon-user2 Ba1x]$ zcat jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz | head
+[aadas@bluemoon-user2 ~]$ mkdir Ba
 ```
 
-#### Trimming script 
+my new folder is Ba
+
+### Now create a script for running the trimming program 
+
+you should be in your **Ba** folder 
+
+```
+[aadas@bluemoon-user2 ~]$ cd Ba/
+[aadas@bluemoon-user2 Ba]$
+```
+
+ Now to create a blank script
+
+```
+[aadas@bluemoon-user2 ~]$ vi trimmomatic.sh
+```
+
+Now press **i** to insert 
+
+Copy and paste everything present in the new script from this sample one
 
 ```
 #!/bin/bash
@@ -79,6 +92,42 @@ workDIR=/users/j/z/jzhong2/scratch/wheat_polyploidization
 cd $workDIR
 #####TRIMMING COMMANDS AND PARAMETERS
 java -jar $SOFTWARE/trimmomatic-0.33.jar PE -phred33 $workDIR/Melica6weekcold01.R1.fq $workDIR/Melica6weekcold01.R2.fq $workDIR/Melica6weekcold01_R1.trimmo.fq $workDIR/Melica6weekcold01_R1.unpaired.fq $workDIR/Melica6weekcold01_R2.trimmo.fq $workDIR/Melica6weekcold01_R2.unpaired.fq ILLUMINACLIP:TruSeq3-PE-2.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:5:20 MINLEN:40
+```
+
+and **esc**, **:wq** to save and quit. 
+
+
+
+#### Let's see what files are present in Ba1x folder "pre-treatment" (1x)
+
+```
+[aadas@bluemoon-user2 ~]$ cd Ba1x/
+[aadas@bluemoon-user2 Ba1x]$ ll
+total 10661240
+drwxr-xr-x 4 djshirle usr        512 Feb 24 16:11 jcpresto_BrArisVR_20170217_Ba1x_R1_fastqc
+-rw-r--r-- 1 djshirle usr     197928 Feb 24 16:11 jcpresto_BrArisVR_20170217_Ba1x_R1_fastqc.zip
+-rw-r--r-- 1 djshirle usr 5399685374 Feb 24 15:41 jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz
+-rw-r--r-- 1 djshirle usr        157 Feb 24 15:43 jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz.md5sum
+drwxr-xr-x 4 djshirle usr        512 Feb 24 16:10 jcpresto_BrArisVR_20170217_Ba1x_R2_fastqc
+-rw-r--r-- 1 djshirle usr     201979 Feb 24 16:10 jcpresto_BrArisVR_20170217_Ba1x_R2_fastqc.zip
+-rw-r--r-- 1 djshirle usr 5517001528 Feb 24 15:45 jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz
+-rw-r--r-- 1 djshirle usr        157 Feb 24 15:46 jcpresto_BrArisVR_20170217_Ba1x_R2.fastq.gz.md5sum
+```
+
+
+
+
+
+
+
+
+
+
+
+#### To see the fastq.gz file
+
+```
+[aadas@bluemoon-user2 Ba1x]$ zcat jcpresto_BrArisVR_20170217_Ba1x_R1.fastq.gz | head
 ```
 
 ### Mar 20: Jinshun Intro
