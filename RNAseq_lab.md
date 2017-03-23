@@ -235,7 +235,7 @@ mv oldname newname
 mv *.trimmo.fq.gz ../Brachyleytrum_aristosum
 ```
 
-#### Moving Ba2x file to Ba
+#### Moving Ba2x,Ba3x file to Ba folder
 
 ```
 [aadas@bluemoon-user2 ~]$ cd Ba2x/
