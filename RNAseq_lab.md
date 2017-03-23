@@ -147,6 +147,8 @@ java -jar $SOFTWARE/trimmomatic-0.33.jar PE -phred33 $workDIR/Melica6weekcold01.
 
 and **esc**, **:wq** to save and quit. 
 
+**:q!** only quit without saving.
+
 look how I edited the things
 
 ```
@@ -226,4 +228,8 @@ hang on there it's gonna take 6hrs. You can submit multiple jobs.
 <div id='id-section2'/>
 ### Page 2: 2017-03-21. Trimming Ba2x,Ba3x 
 
+```
+mv oldname newname
+mv *.trimmo.fq.gz ../Brachyleytrum_aristosum
+```
 
