@@ -226,7 +226,7 @@ hang on there it's gonna take 6hrs. You can submit multiple jobs.
 
 -----
 <div id='id-section2'/>
-### Page 2: 2017-03-23. Trimming Ba2x,Ba3x 
+### Page 2: 2017-03-23. Trimming Ba2-3x, Ba4-6y, Ba7-8z 
 
 ###### Some moving tips 
 
