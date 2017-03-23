@@ -10,7 +10,7 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 ## Table of contents    
 * [Page 1: 2017-03-20](#id-section1). Moving files and trimming 
-* [Page 1: 2017-03-21](#id-section2). Trimming Ba2x,Ba3x 
+* [Page 1: 2017-03-23](#id-section2). Trimming Ba2x,Ba3x 
 
 ------
 <div id='id-section1'/>
@@ -226,10 +226,46 @@ hang on there it's gonna take 6hrs. You can submit multiple jobs.
 
 -----
 <div id='id-section2'/>
-### Page 2: 2017-03-21. Trimming Ba2x,Ba3x 
+### Page 2: 2017-03-23. Trimming Ba2x,Ba3x 
+
+###### Some moving tips 
 
 ```
 mv oldname newname
 mv *.trimmo.fq.gz ../Brachyleytrum_aristosum
 ```
+
+#### Moving Ba2x file to Ba
+
+```
+[aadas@bluemoon-user2 ~]$ cd Ba2x/
+[aadas@bluemoon-user2 Ba2x]$ cp jcpresto_BrArisVR_20170217_Ba2x_R1.fastq.gz ../Ba/Ba2x_precold.R1.fastq.gz
+[aadas@bluemoon-user2 Ba2x]$ cp jcpresto_BrArisVR_20170217_Ba2x_R2.fastq.gz ../Ba/Ba2x_precold.R2.fastq.gz
+
+```
+
+#### Now edit the script -
+
+```
+[aadas@bluemoon-user2 ~]$ cd Ba/
+[aadas@bluemoon-user2 Ba]$ ll
+[aadas@bluemoon-user2 Ba]$ vi trimmomatic.sh 
+```
+
+replace the Ba1x with Ba2x. Then :wq to save
+
+#### Now make the script excutable 
+
+```
+[aadas@bluemoon-user2 Ba]$ chmod 700 trimmomatic.sh 
+```
+
+#### Submit the job and view
+
+```
+[aadas@bluemoon-user2 Ba]$ qsub trimmomatic.sh
+[aadas@bluemoon-user2 Ba]$ showq -u aadas
+```
+
+
 
