@@ -306,11 +306,27 @@ unzip the tar file
 ```
 
 - -z: Compress the archive with g**z**ip.
-- x ; decompress
+- x ; decompress or extraction
 - -v: Display progress in the terminal while creating the archive, also known as “**v**erbose” mode. The v is always optional in these commands, but it’s helpful.
 - -f: Allows you to specify the **f**ilename of the archive.
 
+now install 
 
+```
+[aadas@bluemoon-user2 Bin]$ cd trinityrnaseq-Trinity-v2.4.0/
+[aadas@bluemoon-user2 trinityrnaseq-Trinity-v2.4.0]$ make 
+```
+
+
+
+
+
+
+
+```
+[aadas@bluemoon-user2 Brachyleytrum_aristosum]$ zcat *R1.trimmo.fq.gz > BrachyletrumARI.R1.trimmo.fq &
+[aadas@bluemoon-user2 Brachyleytrum_aristosum]$ zcat *R2.trimmo.fq.gz > BrachyletrumARI.R2.trimmo.fq &
+```
 
 
 
