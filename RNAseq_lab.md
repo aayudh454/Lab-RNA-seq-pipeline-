@@ -11,7 +11,7 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 ## Table of contents    
 * [Page 1: 2017-03-20](#id-section1). Moving files and trimming 
 * [Page 2: 2017-03-23](#id-section2). Trimming Ba2-3x, Ba4-6y, Ba7-8z
-* [Page 3 2017-03-24](#id-section3). Assembly 
+* [Page 3 2017-03-24](#id-section3). Concatenation 
 
 ------
 <div id='id-section1'/>
@@ -171,7 +171,7 @@ SOFTWARE=/users/a/a/aadas/Trimmomatic-0.36
 workDIR=/users/a/a/aadas/Ba
 cd $workDIR
 #####TRIMMING COMMANDS AND PARAMETERS
-java -jar $SOFTWARE/trimmomatic-0.36.jar PE -phred33 $workDIR/Ba1x_precold.R1.fastq.gz $workDIR/Ba1x_precold.R2.fastq.gz $workDIR/Ba1x_precold_R1.trimmo.fq.gz $workDIR/Ba1x_precold.R1.unpaired.fq.gz $workDIR/Ba1x_precold.R2.trimmo.fq.gz $workDIR/Ba1x_precold.R2.unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE-2.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:5:20 MINLEN:40
+java -jar $SOFTWARE/trimmomatic-0.36.jar PE -phred33 $workDIR/Ba1x_precold.R1.fastq.gz $workDIR/Ba1x_precold.R2.fastq.gz $workDIR/Ba1x_precold.R1.trimmo.fq.gz $workDIR/Ba1x_precold.R1.unpaired.fq.gz $workDIR/Ba1x_precold.R2.trimmo.fq.gz $workDIR/Ba1x_precold.R2.unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE-2.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:5:20 MINLEN:40
 ```
 
 i. You need to check **Submitting Jobs to the Cluster**-
@@ -278,5 +278,67 @@ replace the Ba1x with Ba2x. Then :wq to save
 
 <div id='id-section3'/>
 
-### Page 3: 2017-03-24. Assembly steps
+### Page 3: 2017-03-24. Concatenation
+
+###### Some tips
+
+to delete a line: **esc** and **d+d**
+
+https://www.cs.colostate.edu/helpdocs/vi.html
+
+#### 1. Install trinity 
+
+```
+[aadas@bluemoon-user2 ~]$ wget https://github.com/trinityrnaseq/trinityrnaseq/archive/Trinity-v2.4.0.tar.gz
+```
+
+Now create a new directory and move Trinity to that
+
+```
+[aadas@bluemoon-user2 ~]$ mkdir Bin
+[aadas@bluemoon-user2 ~]$ mv Trinity-v2.4.0.tar.gz Bin/
+```
+
+unzip the tar file
+
+```
+[aadas@bluemoon-user2 Bin]$ tar -zxvf Trinity-v2.4.0.tar.gz
+```
+
+- -z: Compress the archive with g**z**ip.
+- x ; decompress
+- -v: Display progress in the terminal while creating the archive, also known as “**v**erbose” mode. The v is always optional in these commands, but it’s helpful.
+- -f: Allows you to specify the **f**ilename of the archive.
+
+
+
+
+
+
+
+
+
+#### Make sure you have a script 
+
+```
+#!/bin/bash
+
+#PBS -l nodes=1:ppn=8,mem=96G,vmem=100G
+#PBS -q poolmemq
+# it needs to run for 6 hours
+#PBS -l walltime=30:00:00
+#PBS -N trinity
+#PBS -j oe
+#PBS -M aadas@uvm.edu
+#PBS -m bea
+module load samtools-1.3.1-gcc-6.3.0-e5jw5u4
+module load bowtie2-2.2.5-gcc-6.3.0-daskah5
+ulimit -s unlimited
+
+SOFTWAREDIR=/users/a/a/aadas/Bin/trinityrnaseq-Trinity-v2.4.0
+WORKINGDIR=/users/a/a/aadas/Brachyleytrum_aristosum
+cd $WORKINGDIR
+
+$SOFTWAREDIR/Trinity --seqType fq --max_memory 96G --left $WORKINGDIR/AegilopsLON_reads1.fastq --right $WORKINGDIR/AegilopsLON_reads2.fastq --CPU 8
+```
 
