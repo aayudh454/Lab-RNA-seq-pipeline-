@@ -255,7 +255,7 @@ mv *.trimmo.fq.gz ../Brachyleytrum_aristosum
 
 replace the Ba1x with Ba2x. Then :wq to save
 
-#### Now make the script excutable 
+#### Now make the script execute the task 
 
 ```
 [aadas@bluemoon-user2 Ba]$ chmod 700 trimmomatic.sh 
