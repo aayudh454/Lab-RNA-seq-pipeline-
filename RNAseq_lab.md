@@ -317,24 +317,23 @@ now install
 [aadas@bluemoon-user2 trinityrnaseq-Trinity-v2.4.0]$ make 
 ```
 
-
-
-
-
-
+#### 2. Execute concatenation for both R1 and R2
 
 ```
 [aadas@bluemoon-user2 Brachyleytrum_aristosum]$ zcat *R1.trimmo.fq.gz > BrachyletrumARI.R1.trimmo.fq &
 [aadas@bluemoon-user2 Brachyleytrum_aristosum]$ zcat *R2.trimmo.fq.gz > BrachyletrumARI.R2.trimmo.fq &
 ```
 
+#### After finishing the concatenation check the "sequence header for both R1 and R2"-it should be same
 
+```
+[aadas@bluemoon-user2 Brachyleytrum_aristosum]$ grep -c "@" BrachyletrumARI.R1.trimmo.fq 
+[aadas@bluemoon-user2 Brachyleytrum_aristosum]$ grep -c "@" BrachyletrumARI.R2.trimmo.fq 
+```
 
+both shows 168097158; That means R1 and R2 has same reads.
 
-
-
-
-#### Make sure you have a script 
+#### 3. Make sure you have a script to do the assembly 
 
 ```
 #!/bin/bash
@@ -356,5 +355,36 @@ WORKINGDIR=/users/a/a/aadas/Brachyleytrum_aristosum
 cd $WORKINGDIR
 
 $SOFTWAREDIR/Trinity --seqType fq --max_memory 96G --left $WORKINGDIR/AegilopsLON_reads1.fastq --right $WORKINGDIR/AegilopsLON_reads2.fastq --CPU 8
+```
+
+edit the script (change WORKINGDIR file names)
+
+```
+#!/bin/bash
+
+#PBS -l nodes=1:ppn=8,mem=96G,vmem=100G
+#PBS -q poolmemq
+# it needs to run for 6 hours
+#PBS -l walltime=30:00:00
+#PBS -N trinity
+#PBS -j oe
+#PBS -M aadas@uvm.edu
+#PBS -m bea
+module load samtools-1.3.1-gcc-6.3.0-e5jw5u4
+module load bowtie2-2.2.5-gcc-6.3.0-daskah5
+ulimit -s unlimited
+
+SOFTWAREDIR=/users/a/a/aadas/Bin/trinityrnaseq-Trinity-v2.4.0
+WORKINGDIR=/users/a/a/aadas/Brachyleytrum_aristosum
+cd $WORKINGDIR
+
+$SOFTWAREDIR/Trinity --seqType fq --max_memory 96G --left $WORKINGDIR/BrachyletrumARI.R1.trimmo.fq --right $WORKINGDIR/BrachyletrumARI.R2.trimmo.fq --CPU 8
+```
+
+Submit the job and view
+
+```
+[aadas@bluemoon-user2 Brachyleytrum_aristosum]$ qsub vacctrinity.sh 
+[aadas@bluemoon-user2 Brachyleytrum_aristosum]$ showq -u aadas
 ```
 
