@@ -267,5 +267,11 @@ replace the Ba1x with Ba2x. Then :wq to save
 [aadas@bluemoon-user2 Ba]$ showq -u aadas
 ```
 
+#### Copy only the trimmo.fq.gz files to a new folder for assembly
+
+```
+[aadas@bluemoon-user2 Ba]$ cp *.trimmo.fq.gz ../Brachyleytrum_aristosum
+```
+
 
 
