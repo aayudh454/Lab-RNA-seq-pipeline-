@@ -10,7 +10,8 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 ## Table of contents    
 * [Page 1: 2017-03-20](#id-section1). Moving files and trimming 
-* [Page 1: 2017-03-23](#id-section2). Trimming Ba2x,Ba3x 
+* [Page 2: 2017-03-23](#id-section2). Trimming Ba2-3x, Ba4-6y, Ba7-8z
+* [Page 3 2017-03-24](#id-section3). Assembly 
 
 ------
 <div id='id-section1'/>
@@ -273,5 +274,9 @@ replace the Ba1x with Ba2x. Then :wq to save
 [aadas@bluemoon-user2 Ba]$ cp *.trimmo.fq.gz ../Brachyleytrum_aristosum
 ```
 
+------
 
+<div id='id-section3'/>
+
+### Page 3: 2017-03-24. Assembly steps
 
