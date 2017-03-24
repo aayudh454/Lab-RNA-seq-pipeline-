@@ -10,8 +10,14 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 ## Table of contents    
 * [Page 1: 2017-03-20](#id-section1). Moving files and trimming 
+
 * [Page 2: 2017-03-23](#id-section2). Trimming Ba2-3x, Ba4-6y, Ba7-8z
+
 * [Page 3 2017-03-24](#id-section3). Concatenation and assembly
+
+* [Page 4 2017-03-28](#id-section4). 
+
+  ​
 
 ------
 <div id='id-section1'/>
@@ -274,6 +280,8 @@ replace the Ba1x with Ba2x. Then :wq to save
 [aadas@bluemoon-user2 Ba]$ cp *.trimmo.fq.gz ../Brachyleytrum_aristosum
 ```
 
+
+
 ------
 
 <div id='id-section3'/>
@@ -285,6 +293,12 @@ replace the Ba1x with Ba2x. Then :wq to save
 to delete a line: **esc** and **d+d**
 
 https://www.cs.colostate.edu/helpdocs/vi.html
+
+Save all the commands as a history.txt
+
+```
+[aadas@bluemoon-user2 ~]$ history > history.txt
+```
 
 #### 1. Install trinity 
 
@@ -387,4 +401,14 @@ Submit the job and view
 [aadas@bluemoon-user2 Brachyleytrum_aristosum]$ qsub vacctrinity.sh 
 [aadas@bluemoon-user2 Brachyleytrum_aristosum]$ showq -u aadas
 ```
+
+
+
+------
+
+<div id='id-section4'/>
+
+### Page 4: 2017-03-28. Con
+
+###### Some tips
 
