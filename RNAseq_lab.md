@@ -11,7 +11,7 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 ## Table of contents    
 * [Page 1: 2017-03-20](#id-section1). Moving files and trimming 
 * [Page 2: 2017-03-23](#id-section2). Trimming Ba2-3x, Ba4-6y, Ba7-8z
-* [Page 3 2017-03-24](#id-section3). Concatenation 
+* [Page 3 2017-03-24](#id-section3). Concatenation and assembly
 
 ------
 <div id='id-section1'/>
