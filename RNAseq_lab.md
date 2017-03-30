@@ -13,7 +13,7 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 * [Page 2: 2017-03-23](#id-section2). Trimming Ba2-3x, Ba4-6y, Ba7-8z
 
-* [Page 3 2017-03-24](#id-section3). Concatenation and assembly
+* [Page 3 2017-03-24](#id-section3). Concatenation and assembly (using Trinity 2.4.0)
 
 * [Page 4 2017-03-28](#id-section4). 
 
@@ -286,7 +286,7 @@ replace the Ba1x with Ba2x. Then :wq to save
 
 <div id='id-section3'/>
 
-### Page 3: 2017-03-24. Concatenation
+### Page 3: 2017-03-24. Concatenation and assembly
 
 ###### Some tips
 
@@ -300,7 +300,7 @@ Save all the commands as a history.txt
 [aadas@bluemoon-user2 ~]$ history > history.txt
 ```
 
-#### 1. Install trinity 
+#### 1. Install trinity (using Trinity 2.4.0) 
 
 ```
 [aadas@bluemoon-user2 ~]$ wget https://github.com/trinityrnaseq/trinityrnaseq/archive/Trinity-v2.4.0.tar.gz
@@ -376,7 +376,7 @@ edit the script (change WORKINGDIR file names)
 ```
 #!/bin/bash
 
-#PBS -l nodes=1:ppn=8,mem=96G,vmem=100G
+#PBS -l nodes=1:ppn=16,mem=96G,vmem=100G
 #PBS -q poolmemq
 # it needs to run for 6 hours
 #PBS -l walltime=30:00:00
@@ -392,8 +392,18 @@ SOFTWAREDIR=/users/a/a/aadas/Bin/trinityrnaseq-Trinity-v2.4.0
 WORKINGDIR=/users/a/a/aadas/Brachyleytrum_aristosum
 cd $WORKINGDIR
 
-$SOFTWAREDIR/Trinity --seqType fq --max_memory 96G --left $WORKINGDIR/BrachyletrumARI.R1.trimmo.fq --right $WORKINGDIR/BrachyletrumARI.R2.trimmo.fq --CPU 8
+$SOFTWAREDIR/Trinity --seqType fq --max_memory 96G --left $WORKINGDIR/BrachyletrumARI.R1.trimmo.fq --right $WORKINGDIR/BrachyletrumARI.R2.trimmo.fq --CPU 16
 ```
+
+Here you need to include the module load but first you need to check what modules are availble in the cluster.
+
+```
+[aadas@bluemoon-user2 Brachyleytrum_aristosum]$ module avail
+```
+
+Then include the samtools and bowtie version, so that your script can use that program.
+
+Increase the cpu load to 16 in **ppn=16** and also in the end **CPU 16** 
 
 Submit the job and view
 
