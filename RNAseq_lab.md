@@ -237,6 +237,8 @@ hang on there it's gonna take 6hrs. You can submit multiple jobs.
 
 ###### Some moving tips 
 
+#### Rename a file
+
 ```
 mv oldname newname
 mv *.trimmo.fq.gz ../Brachyleytrum_aristosum
@@ -301,6 +303,8 @@ Save all the commands as a history.txt
 ```
 
 #### 1. Install trinity (using Trinity 2.4.0) 
+
+Go to - https://github.com/trinityrnaseq/trinityrnaseq/releases and then copy link address of **Source code (tar.gz)**
 
 ```
 [aadas@bluemoon-user2 ~]$ wget https://github.com/trinityrnaseq/trinityrnaseq/archive/Trinity-v2.4.0.tar.gz
@@ -412,13 +416,74 @@ Submit the job and view
 [aadas@bluemoon-user2 Brachyleytrum_aristosum]$ showq -u aadas
 ```
 
-
+If you see that 30% completed after 30hrs then qsub again and it will catch up from where it was left before.
 
 ------
 
 <div id='id-section4'/>
 
-### Page 4: 2017-03-28. Con
+### Page 4: 2017-03-28. Assembly using Trinity 2.0.6
 
-###### Some tips
+Check the assembly file
+
+```
+[aadas@bluemoon-user2 trinity_out_dir]$ grep ">" Trinity.fasta | less
+[aadas@bluemoon-user2 trinity_out_dir]$ grep ">" Trinity.fasta | sed "s/_i[0-9]\{1,2\} len.*//g" | less
+[aadas@bluemoon-user2 trinity_out_dir]$ grep ">" Trinity.fasta | sed "s/_i[0-9]\{1,2\} len.*//g" | sort -u | less
+[aadas@bluemoon-user2 trinity_out_dir]$ grep ">" Trinity.fasta | sed "s/_i[0-9]\{1,2\} len.*//g" | sort -u | wc -l
+```
+
+94102
+
+check no. of seq
+
+```
+[aadas@bluemoon-user2 trinity_out_dir]$ grep ">" Trinity.fasta -c
+```
+
+567758
+
+new script
+
+```
+#!/bin/bash
+
+#PBS -l nodes=1:ppn=16,mem=96G,vmem=128G
+#PBS -q poolmemq
+# it needs to run for 6 hours
+#PBS -l walltime=30:00:00
+#PBS -N trinity
+#PBS -j oe
+#PBS -M jzhong2@uvm.edu
+#PBS -m bea
+
+export PATH="/gpfs1/home/j/z/jzhong2/bin/blast:$PATH"
+export PATH="/users/j/z/jzhong2/bin/samtools-1.1:$PATH"
+export PATH="/users/j/z/jzhong2/bin/bowtie-1.1.1:$PATH"
+export PATH="/users/j/z/jzhong2/bin/bowtie2-2.2.4:$PATH"
+export PATH="/users/j/z/jzhong2/bin/rsem-1.2.19:$PATH"
+export PATH="/users/j/z/jzhong2/bin/ncbi-blast-2.2.31+-src/bin:$PATH"
+export PATH="/users/j/z/jzhong2/bin/TransDecoder-2.0.1/transdecoder_plugins/cdhit:$PATH"
+export PATH="/users/j/z/jzhong2/bin/TransDecoder-2.0.1:$PATH"
+export PATH="/users/j/z/jzhong2/bin/jre1.7.0_51/bin:$PATH"
+export PATH="/users/j/z/jzhong2/bin/jre1.7.0_51/bin/java:$PATH"
+
+ulimit -s unlimited
+
+SOFTWAREDIR=/users/a/a/aadas/Bin_Trinity206/trinityrnaseq-2.0.6
+WORKINGDIR=/users/a/a/aadas/Brachyleytrum_aristosum
+cd $WORKINGDIR
+
+$SOFTWAREDIR/Trinity --seqType fq --max_memory 96G --left $WORKINGDIR/BrachyletrumARI.R1.trimmo.fq --right $WORKINGDIR/BrachyletrumARI.R2.trimmo.fq --CPU 16
+```
+
+
+
+module load
+
+```
+module load samtools-1.3.1-gcc-6.3.0-e5jw5u4
+module load bowtie2-2.2.5-gcc-6.3.0-daskah5
+
+```
 
