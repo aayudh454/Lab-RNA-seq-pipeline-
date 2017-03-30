@@ -15,7 +15,7 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 * [Page 3 2017-03-24](#id-section3). Concatenation and assembly (using Trinity 2.4.0)
 
-* [Page 4 2017-03-28](#id-section4). 
+* [Page 4 2017-03-28](#id-section4). Assembly using Trinity 2.0.6
 
   ​
 
@@ -433,6 +433,7 @@ If you see that 30% completed after 30hrs then qsub again and it will catch up f
 Check the assembly file
 
 ```
+# number of sequence present
 [aadas@bluemoon-user2 trinity_out_dir]$ grep ">" Trinity.fasta | less
 [aadas@bluemoon-user2 trinity_out_dir]$ grep ">" Trinity.fasta | sed "s/_i[0-9]\{1,2\} len.*//g" | less
 [aadas@bluemoon-user2 trinity_out_dir]$ grep ">" Trinity.fasta | sed "s/_i[0-9]\{1,2\} len.*//g" | sort -u | less
@@ -449,11 +450,11 @@ check no. of seq
 
 567758
 
-new script
+
+
+#### New script for assembly (Trinity 2.0.6) 
 
 ```
-[aadas@bluemoon-user2 Brachyleytrum_aristosum]$ vi vacctrinityv206.sh 
-
 #!/bin/bash
 
 #PBS -l nodes=1:ppn=16,mem=96G,vmem=128G
@@ -462,7 +463,7 @@ new script
 #PBS -l walltime=30:00:00
 #PBS -N trinity
 #PBS -j oe
-#PBS -M jzhong2@uvm.edu
+#PBS -M aadas@uvm.edu
 #PBS -m bea
 module load samtools-1.3.1-gcc-6.3.0-e5jw5u4
 
