@@ -452,6 +452,8 @@ check no. of seq
 new script
 
 ```
+[aadas@bluemoon-user2 Brachyleytrum_aristosum]$ vi vacctrinityv206.sh 
+
 #!/bin/bash
 
 #PBS -l nodes=1:ppn=16,mem=96G,vmem=128G
@@ -462,18 +464,11 @@ new script
 #PBS -j oe
 #PBS -M jzhong2@uvm.edu
 #PBS -m bea
+module load samtools-1.3.1-gcc-6.3.0-e5jw5u4
 
-export PATH="/gpfs1/home/j/z/jzhong2/bin/blast:$PATH"
-export PATH="/users/j/z/jzhong2/bin/samtools-1.1:$PATH"
-export PATH="/users/j/z/jzhong2/bin/bowtie-1.1.1:$PATH"
-export PATH="/users/j/z/jzhong2/bin/bowtie2-2.2.4:$PATH"
-export PATH="/users/j/z/jzhong2/bin/rsem-1.2.19:$PATH"
-export PATH="/users/j/z/jzhong2/bin/ncbi-blast-2.2.31+-src/bin:$PATH"
-export PATH="/users/j/z/jzhong2/bin/TransDecoder-2.0.1/transdecoder_plugins/cdhit:$PATH"
-
-export PATH="/users/j/z/jzhong2/bin/TransDecoder-2.0.1:$PATH"
-export PATH="/users/a/a/aadas/Bin/jre1.7.0_80jre/bin:$PATH"
-export PATH="/users/j/z/jzhong2/bin/jre1.7.0_51/bin/java:$PATH"
+export PATH="/users/a/a/aadas/Bin/bowtie-1.2:$PATH"
+export PATH="/users/a/a/aadas/Bin/jre1.7.0_80/bin:$PATH"
+export PATH="/users/a/a/aadas/Bin/jre1.7.0_80/bin/java:$PATH"
 
 ulimit -s unlimited
 
@@ -482,15 +477,5 @@ WORKINGDIR=/users/a/a/aadas/Brachyleytrum_aristosum
 cd $WORKINGDIR
 
 $SOFTWAREDIR/Trinity --seqType fq --max_memory 96G --left $WORKINGDIR/BrachyletrumARI.R1.trimmo.fq --right $WORKINGDIR/BrachyletrumARI.R2.trimmo.fq --CPU 16
-```
-
-
-
-module load
-
-```
-module load samtools-1.3.1-gcc-6.3.0-e5jw5u4
-module load bowtie2-2.2.5-gcc-6.3.0-daskah5
-
 ```
 
