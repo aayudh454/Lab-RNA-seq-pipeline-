@@ -335,6 +335,12 @@ now install
 [aadas@bluemoon-user2 trinityrnaseq-Trinity-v2.4.0]$ make 
 ```
 
+but when downloading Trinity v2.0.6
+
+````
+[aadas@bluemoon-user2 trinityrnaseq-2.0.6]$ make plugins
+````
+
 #### 2. Execute concatenation for both R1 and R2
 
 ```
@@ -464,8 +470,9 @@ export PATH="/users/j/z/jzhong2/bin/bowtie2-2.2.4:$PATH"
 export PATH="/users/j/z/jzhong2/bin/rsem-1.2.19:$PATH"
 export PATH="/users/j/z/jzhong2/bin/ncbi-blast-2.2.31+-src/bin:$PATH"
 export PATH="/users/j/z/jzhong2/bin/TransDecoder-2.0.1/transdecoder_plugins/cdhit:$PATH"
+
 export PATH="/users/j/z/jzhong2/bin/TransDecoder-2.0.1:$PATH"
-export PATH="/users/j/z/jzhong2/bin/jre1.7.0_51/bin:$PATH"
+export PATH="/users/a/a/aadas/Bin/jre1.7.0_80jre/bin:$PATH"
 export PATH="/users/j/z/jzhong2/bin/jre1.7.0_51/bin/java:$PATH"
 
 ulimit -s unlimited
