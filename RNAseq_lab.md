@@ -450,8 +450,6 @@ check no. of seq
 
 567758
 
-
-
 #### New script for assembly (Trinity 2.0.6) 
 
 ```
@@ -479,4 +477,20 @@ cd $WORKINGDIR
 
 $SOFTWAREDIR/Trinity --seqType fq --max_memory 96G --left $WORKINGDIR/BrachyletrumARI.R1.trimmo.fq --right $WORKINGDIR/BrachyletrumARI.R2.trimmo.fq --CPU 16
 ```
+
+##### When you download something in mac and upload that to server
+
+```
+scp bowtie-1.2-linux-x86_64.zip aadas@bluemoon-user2.uvm.edu:~/
+```
+
+##### Delete an entire directory
+
+```
+rm -rf filename
+```
+
+
+
+
 
