@@ -490,6 +490,23 @@ scp bowtie-1.2-linux-x86_64.zip aadas@bluemoon-user2.uvm.edu:~/
 rm -rf filename
 ```
 
+#### First time before you execute the job with a new Trinity version
+
+```
+  936  2017-04-05 10:28:20 module load samtools-1.3.1-gcc-6.3.0-e5jw5u4
+  937  2017-04-05 10:28:32 export PATH="/users/a/a/aadas/Bin/bowtie-1.2:$PATH"
+  938  2017-04-05 10:28:40 export PATH="/users/a/a/aadas/Bin/jre1.7.0_80/bin:$PATH"
+  939  2017-04-05 10:28:46 export PATH="/users/a/a/aadas/Bin/jre1.7.0_80/bin/java:$PATH"
+  940  2017-04-05 10:29:10 cd ..
+  941  2017-04-05 10:29:19 cd Bin/
+  942  2017-04-05 10:29:20 ll
+  943  2017-04-05 10:29:32 cd trinityrnaseq-Trinity-v2.3.2
+  944  2017-04-05 10:29:35 make
+  945  2017-04-05 10:34:06 cd ~/
+```
+
+
+
 
 
 
