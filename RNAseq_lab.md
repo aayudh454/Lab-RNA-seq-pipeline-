@@ -490,6 +490,36 @@ scp bowtie-1.2-linux-x86_64.zip aadas@bluemoon-user2.uvm.edu:~/
 rm -rf filename
 ```
 
+### Running assembly with Trinity 2.1.1
+
+```
+#!/bin/bash
+
+#PBS -l nodes=1:ppn=24,mem=256G,vmem=288G
+#PBS -q poolmemq
+# it needs to run for 6 hours
+#PBS -l walltime=30:00:00
+#PBS -N trinity
+#PBS -j oe
+#PBS -M aadas@uvm.edu
+#PBS -m bea
+module load samtools-1.3.1-gcc-6.3.0-e5jw5u4
+
+export PATH="/users/a/a/aadas/Bin/bowtie-1.2:$PATH"
+export PATH="/users/a/a/aadas/Bin/jre1.7.0_80/bin:$PATH"
+export PATH="/users/a/a/aadas/Bin/jre1.7.0_80/bin/java:$PATH"
+
+ulimit -s unlimited
+
+SOFTWAREDIR=/users/a/a/aadas/Bin/trinityrnaseq-2.1.1
+WORKINGDIR=/users/a/a/aadas/Brachyleytrum_aristosum
+cd $WORKINGDIR
+
+$SOFTWAREDIR/Trinity --seqType fq --max_memory 256G --left $WORKINGDIR/BrachyletrumARI.R1.trimmo.fq --right $WORKINGDIR/BrachyletrumARI.R2.trimmo.fq --CPU 24
+```
+
+ 
+
 #### First time before you execute the job with a new Trinity version
 
 ```
