@@ -15,7 +15,7 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 * [Page 3 2017-03-24](#id-section3). Concatenation and assembly (using Trinity 2.4.0)
 
-* [Page 4 2017-03-28](#id-section4). Assembly using Trinity 2.0.6
+* [Page 4 2017-03-28](#id-section4). Assembly using Trinity 2.0.6 
 
   ​
 
