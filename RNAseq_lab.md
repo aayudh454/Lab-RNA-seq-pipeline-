@@ -495,27 +495,24 @@ rm -rf filename
 ```
 #!/bin/bash
 
-#PBS -l nodes=1:ppn=24,mem=256G,vmem=288G
+#PBS -l nodes=1:ppn=24,mem=128G,vmem=144G
 #PBS -q poolmemq
 # it needs to run for 6 hours
 #PBS -l walltime=30:00:00
-#PBS -N trinity
+#PBS -N trinityv211
 #PBS -j oe
 #PBS -M aadas@uvm.edu
 #PBS -m bea
 module load samtools-1.3.1-gcc-6.3.0-e5jw5u4
-
-export PATH="/users/a/a/aadas/Bin/bowtie-1.2:$PATH"
-export PATH="/users/a/a/aadas/Bin/jre1.7.0_80/bin:$PATH"
-export PATH="/users/a/a/aadas/Bin/jre1.7.0_80/bin/java:$PATH"
-
-ulimit -s unlimited
+module load bowtie2-2.2.5-gcc-6.3.0-daskah5
+export PATH="/users/a/a/aadas/Bin/bowtie-1.1.1:$PATH"
+#ulimit -s unlimited
 
 SOFTWAREDIR=/users/a/a/aadas/Bin/trinityrnaseq-2.1.1
-WORKINGDIR=/users/a/a/aadas/Brachyleytrum_aristosum
+WORKINGDIR=/users/a/a/aadas/Brachyleytrum_aristosum/Trinity211assembly
 cd $WORKINGDIR
 
-$SOFTWAREDIR/Trinity --seqType fq --max_memory 256G --left $WORKINGDIR/BrachyletrumARI.R1.trimmo.fq --right $WORKINGDIR/BrachyletrumARI.R2.trimmo.fq --CPU 24
+/users/a/a/aadas/Bin/trinityrnaseq-2.1.1/Trinity --seqType fq --normalize_reads --max_memory 128G --left /users/a/a/aadas/Brachyleytrum_aristosum/Trinity211assembly/BrachyletrumARI.R1.trimmo.fq --right /users/a/a/aadas/Brachyleytrum_aristosum/Trinity211assembly/BrachyletrumARI.R2.trimmo.fq --CPU 24
 ```
 
  
