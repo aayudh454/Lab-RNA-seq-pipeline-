@@ -17,6 +17,8 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 * [Page 4 2017-03-28](#id-section4). Assembly using Trinity 2.0.6 and 2.1.1 
 
+* [Page 5 2017-04-11](#id-section5). Transcript quantification by RSEM
+
   ​
 
 ------
@@ -533,6 +535,46 @@ cd $WORKINGDIR
 ```
 
 
+
+------
+
+<div id='id-section5'/>
+
+### Page 5: 2017-04-11. Transcript quantification by RSEM
+
+Script for transcript quantification
+
+* Make sure your Trinity.fasta file in the directory
+* Make sure that R1.trimmo.fq.gz and R2.trimmo.fq.gz are also in the FASTQ_DIR
+
+```
+#!/bin/bash
+
+######## This job needs 1 nodes, 4 processors total
+#PBS -l nodes=1:ppn=4,pmem=8gb,pvmem=9gb
+#PBS -l walltime=30:00:00
+#PBS -N outprecold
+#PBS -j oe
+#PBS -M aadas@uvm.edu
+#PBS -m bea
+module load samtools-1.3.1-gcc-6.3.0-e5jw5u4
+
+TRINITY_HOME=/users/a/a/aadas/Bin/trinityrnaseq-2.1.1
+
+export PATH=/users/a/a/aadas/Bin/bowtie-1.1.1:$PATH
+export PATH=/users/a/a/aadas/Bin/RSEM-1.2.19:$PATH
+
+FASTQ_DIR=/users/a/a/aadas/Brachyleytrum_aristosum/assemblyTrinity2.1.1
+cd $FASTQ_DIR
+
+$TRINITY_HOME/util/align_and_estimate_abundance.pl --transcripts Brachyleytrum_trinityv211.fasta --seqType fq --left $FASTQ_DIR/Ba1x_precold_R1.trimmo.fq.gz --right $FASTQ_DIR/Ba1x_precold_R2.trimmo.fq.gz --est_method RSEM --aln_method bowtie --thread_count 4 --SS_lib_type RF --trinity_mode --prep_reference --output_dir $FASTQ_DIR --output_prefix Brachyleytrum_precold01
+
+
+$TRINITY_HOME/util/align_and_estimate_abundance.pl --transcripts Brachyleytrum_trinityv211.fasta --seqType fq --left $FASTQ_DIR/Ba2x_precold_R1.trimmo.fq.gz --right $FASTQ_DIR/Ba2x_precold_R2.trimmo.fq.gz --est_method RSEM --aln_method bowtie --thread_count 4 --SS_lib_type RF --trinity_mode --output_dir $FASTQ_DIR --output_prefix Brachyleytrum_precold02
+
+
+$TRINITY_HOME/util/align_and_estimate_abundance.pl --transcripts Brachyleytrum_trinityv211.fasta --seqType fq --left $FASTQ_DIR/Ba3x_precold_R1.trimmo.fq.gz --right $FASTQ_DIR/Ba3x_precold_R2.trimmo.fq.gz --est_method RSEM --aln_method bowtie --thread_count 4 --SS_lib_type RF --trinity_mode --output_dir $FASTQ_DIR --output_prefix Brachyleytrum_precold03
+```
 
 
 
