@@ -497,7 +497,7 @@ rm -rf filename
 ```
 #!/bin/bash
 
-#PBS -l nodes=1:ppn=24,mem=128G,vmem=144G
+#PBS -l nodes=1:ppn=24,mem=256G,vmem=288G
 #PBS -q poolmemq
 # it needs to run for 6 hours
 #PBS -l walltime=30:00:00
@@ -514,7 +514,7 @@ SOFTWAREDIR=/users/a/a/aadas/Bin/trinityrnaseq-2.1.1
 WORKINGDIR=/users/a/a/aadas/Brachyleytrum_aristosum/Trinity211assembly
 cd $WORKINGDIR
 
-/users/a/a/aadas/Bin/trinityrnaseq-2.1.1/Trinity --seqType fq --normalize_reads --max_memory 128G --left /users/a/a/aadas/Brachyleytrum_aristosum/Trinity211assembly/BrachyletrumARI.R1.trimmo.fq --right /users/a/a/aadas/Brachyleytrum_aristosum/Trinity211assembly/BrachyletrumARI.R2.trimmo.fq --CPU 24
+/users/a/a/aadas/Bin/trinityrnaseq-2.1.1/Trinity --seqType fq --normalize_reads --max_memory 256G --left /users/a/a/aadas/Brachyleytrum_aristosum/Trinity211assembly/BrachyletrumARI.R1.trimmo.fq --right /users/a/a/aadas/Brachyleytrum_aristosum/Trinity211assembly/BrachyletrumARI.R2.trimmo.fq --CPU 24
 ```
 
  
@@ -534,7 +534,14 @@ cd $WORKINGDIR
   945  2017-04-05 10:34:06 cd ~/
 ```
 
+Check back after your job is done
 
+```
+[aadas@bluemoon-user2 trinity_out_dir]$ grep ">" Trinity.fasta -c
+303494
+[aadas@bluemoon-user2 trinity_out_dir]$ grep ">" Trinity.fasta | sed "s/_i[0-9]\{1,2\} len.*//g" | sort -u | wc -l
+173604
+```
 
 ------
 
@@ -542,10 +549,14 @@ cd $WORKINGDIR
 
 ### Page 5: 2017-04-11. Transcript quantification by RSEM
 
-Script for transcript quantification
+RSEM: accurate transcript quantification from RNA-Seq data with or without a reference genome
+
+Script for transcript quantification.
 
 * Make sure your Trinity.fasta file in the directory
 * Make sure that R1.trimmo.fq.gz and R2.trimmo.fq.gz are also in the FASTQ_DIR
+
+### For pre-cold
 
 ```
 #!/bin/bash
@@ -574,6 +585,33 @@ $TRINITY_HOME/util/align_and_estimate_abundance.pl --transcripts Brachyleytrum_t
 
 
 $TRINITY_HOME/util/align_and_estimate_abundance.pl --transcripts Brachyleytrum_trinityv211.fasta --seqType fq --left $FASTQ_DIR/Ba3x_precold_R1.trimmo.fq.gz --right $FASTQ_DIR/Ba3x_precold_R2.trimmo.fq.gz --est_method RSEM --aln_method bowtie --thread_count 4 --SS_lib_type RF --trinity_mode --output_dir $FASTQ_DIR --output_prefix Brachyleytrum_precold03
+```
+
+The above `R` commands list the top **10 highest expressed genes** (shown below).
+
+```
+data = read.table("Brachyleytrum_precold01.genes.results", header=T, stringsAsFactors=F)
+idx = order(data[,"TPM"], decreasing=T)
+data[idx[1:10], c("gene_id", "expected_count", "TPM")]
+```
+
+​                 gene_id expected_count      TPM
+
+83500   TRINITY_DN32640_c2_g2      195870.99 88722.96
+135779   TRINITY_DN5885_c0_g1       18720.00 21437.99
+88514   TRINITY_DN33238_c0_g3        2823.75 15100.72
+48900   TRINITY_DN25961_c0_g1       24537.02 14854.18
+85085   TRINITY_DN32831_c0_g2       36801.00 14187.48
+135853  TRINITY_DN58913_c0_g1       12804.00 13984.62
+83499   TRINITY_DN32640_c2_g1       28301.73 12804.37
+89635  TRINITY_DN33369_c0_g15       24298.99 11610.17
+88512   TRINITY_DN33238_c0_g1        2153.17 11514.64
+14964   TRINITY_DN16119_c1_g1       21600.00 10408.22
+
+### For cold shock 
+
+```
+
 ```
 
 
