@@ -19,6 +19,8 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 * [Page 5 2017-04-11](#id-section5). Transcript quantification by RSEM
 
+* [Page 6 2017-04-13](#id-section6). Build Transcript and Gene Expression Matrices
+
   ​
 
 ------
@@ -543,6 +545,8 @@ Check back after your job is done
 173604
 ```
 
+l
+
 ------
 
 <div id='id-section5'/>
@@ -613,6 +617,58 @@ data[idx[1:10], c("gene_id", "expected_count", "TPM")]
 ```
 
 ```
+
+------
+
+<div id='id-section6'/>
+
+### Page 6: 2017-04-13. Build Transcript and Gene Expression Matrices
+
+Terms:
+
+**<u>FPKM</u>: fragments per kilobase transcript length per million fragments mapped**
+
+**<u>TPM</u>: transcripts per million transcripts**
+
+Using the transcript and gene-level abundance estimates for each of your samples, construct a matrix of counts and a matrix of normalized expression values using the following script:
+
+#### For genes
+
+```
+[aadas@bluemoon-user2 assemblyTrinity2.1.1]$ ~/Bin/trinityrnaseq-2.1.1/util/abundance_estimates_to_matrix.pl --est_method RSEM Brachyleytrum_precold01.genes.results Brachyleytrum_precold02.genes.results Brachyleytrum_precold03.genes.results Brachyleytrum_coldshock01.genes.results Brachyleytrum_coldshock02.genes.results Brachyleytrum_coldshock03.genes.results Brachyleytrum_sixweekcold01.genes.results Brachyleytrum_sixweekcold02.genes.results --out_prefix Brachyleytrum.genes 
+```
+
+#### For isoforms
+
+```
+~/Bin/trinityrnaseq-2.1.1/util/abundance_estimates_to_matrix.pl --est_method RSEM Brachyleytrum_precold01.isoforms.results Brachyleytrum_precold02.isoforms.results Brachyleytrum_precold03.isoforms.results Brachyleytrum_coldshock01.isoforms.results Brachyleytrum_coldshock02.isoforms.results Brachyleytrum_coldshock03.isoforms.results Brachyleytrum_sixweekcold01.isoforms.results Brachyleytrum_sixweekcold02.isoforms.results --out_prefix Brachyleytrum.isoforms
+```
+
+#### Counting Numbers of Expressed Transcripts or Genes
+
+```
+~/Bin/trinityrnaseq-2.1.1/util/misc/count_matrix_features_given_MIN_TPM_threshold.pl \ Brachyleytrum.genes.TPM.not_cross_norm | tee Brachyleytrum.genes.TPM.not_cross_norm.counts_by_min_TPM
+
+~/Bin/trinityrnaseq-2.1.1/util/misc/count_matrix_features_given_MIN_TPM_threshold.pl \
+          trans_matrix.TPM.not_cross_norm | tee trans_matrix.TPM.not_cross_norm.counts_by_min_TPM
+```
+
+The above table indicates that we have 52,624 'genes' that are expressed by at least 1 TPM in any one of the many samples in this expression matrix.
+
+Plotting the number of 'genes' (or 'transcripts') as a function of minimum TPM threshold, we can see that the vast majority of all expressed features have very little expression support. Using R (or your own favorite data analysis package), we might extrapolate the number of expressed 'genes' based on the trend prior to the massive influx of lowly expressed transcripts:
+
+```
+setwd("~/Desktop")
+list.files()
+data = read.table("Brachyleytrum.genes.TPM.not_cross_norm.counts_by_min_TPM", header=T)
+plot(data, xlim=c(-100,0), ylim=c(0,100000), t='b')
+```
+
+![Rplot](/Users/aayudhdas/Desktop/Rplot.tiff)
+
+
+
+
 
 
 
