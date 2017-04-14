@@ -666,9 +666,27 @@ plot(data, xlim=c(-100,0), ylim=c(0,100000), t='b')
 
 ![Rplot](/Users/aayudhdas/Desktop/Rplot.tiff)
 
+```
+# extract the data between 10 TPM and 100 TPM
+filt_data = data[data[,1] > -100 & data[,1] < -10,] 
+# perform a linear regression on this filtered subset of the data
+fit = lm(filt_data[,2] ~ filt_data[,1])
+print(fit)
 
+Call:
+  lm(formula = filt_data[, 2] ~ filt_data[, 1])
 
+Coefficients:
+  (Intercept)  filt_data[, 1]  
+19361.4           195.5 
 
+# add the linear regression line to the plot 
+abline(fit, col='green', lwd=3)
+```
+
+![Rplot01](/Users/aayudhdas/Desktop/Rplot01.tiff)
+
+The linear regression allows us to extrapolate (based on the Y-intercept) that we have 19361 'genes', which is a far better guess than our count of 52,624 'genes' having at least 1 TPM in any sample, and certainly better than the 1.4 million 'genes' that were assembled.
 
 
 
