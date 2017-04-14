@@ -612,11 +612,7 @@ data[idx[1:10], c("gene_id", "expected_count", "TPM")]
 88512   TRINITY_DN33238_c0_g1        2153.17 11514.64
 14964   TRINITY_DN16119_c1_g1       21600.00 10408.22
 
-### For cold shock 
-
-```
-
-```
+###  
 
 ------
 
@@ -692,7 +688,31 @@ The linear regression allows us to extrapolate (based on the Y-intercept) that w
 ~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix|m Brachyleytrum.genes.counts.matrix --method DESeq2 --min_rowSum_counts --output|o Bra 
 ```
 
+### 
 
+------
+
+<div id='id-section7'/>
+
+### Page 7: 2017-04-14. Differential Expression Analysis
+
+First lets get 'R' working
+
+```
+[aadas@bluemoon-user2 ~]$ module load r-3.3.2-gcc-6.3.0-bmdvb4s
+```
+
+```
+R
+ > source("http://bioconductor.org/biocLite.R")
+ > biocLite('edgeR')
+ > biocLite('limma')
+ > biocLite('DESeq2')
+ > biocLite('ctc')
+ > biocLite('Biobase')
+ > install.packages('gplots')
+ > install.packages('ape')
+```
 
 
 
