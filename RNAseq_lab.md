@@ -688,6 +688,10 @@ abline(fit, col='green', lwd=3)
 
 The linear regression allows us to extrapolate (based on the Y-intercept) that we have 19361 'genes', which is a far better guess than our count of 52,624 'genes' having at least 1 TPM in any sample, and certainly better than the 1.4 million 'genes' that were assembled.
 
+```
+~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix|m Brachyleytrum.genes.counts.matrix --method DESeq2 --min_rowSum_counts --output|o Bra 
+```
+
 
 
 
