@@ -718,6 +718,16 @@ R
 ~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix Brachyleytrum.genes.counts.matrix --method DESeq2 --min_rowSum_counts 2 --output Brachyleytrum_deseq2
 ```
 
+
+
+
+
+------
+
+<div id='id-section8'/>
+
+### Page 8: 2017-04-17. Differential Expression Analysis edgeR
+
 ### Identifying DE Features: No Biological Replicates (Proceed with Caution)	
 
 First lets get 'R' working	
@@ -732,6 +742,67 @@ now, run edgeR via the helper script provided in the Trinity distribution:
 ~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix Brachyleytrum.genes.counts.matrix --method edgeR --dispersion 0.1 --output Brachyleytrum_edgeR
 ```
 
+### Identifying DE features: With biological replicates (PREFERRED)
+
+Be sure to have a tab-delimited 'samples_described.txt' file that describes the relationship between samples and replicates. For example:
+
+just create a text file and copy paste this
+
+```
+conditionA   Brachyleytrum_precold01
+conditionA   Brachyleytrum_precold02
+conditionA   Brachyleytrum_precold03
+
+conditionB   Brachyleytrum_coldshock01
+conditionB   Brachyleytrum_coldshock02
+conditionB   Brachyleytrum_coldshock03
+
+conditionC   Brachyleytrum_sixweekcold01
+conditionC   Brachyleytrum_sixweekcold02
+```
+
+#### voom method
+
+Any of the available methods support analyses containing biological replicates. Here, for example, we again choose voom within the limma package.
+
+```
+~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix Brachyleytrum.genes.counts.matrix --method voom --samples_file samples_described.txt  
+```
+
+### Interactive Volcano and MA Plots using Glimma
+
+The [Glimma](https://bioconductor.org/packages/release/bioc/html/Glimma.html) software provides interactive plots. Generate volcano and MA-plots for any of your pairwise DE analysis results like so:
+
+```
+~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/glimma1.R --samples_file samples_described.txt --DE_results Brachyleytrum.genes.counts.matrix.conditionA_vs_conditionB.voom.DE_results --counts_matrix Brachyleytrum.genes.counts.matrix
+```
+
+### didn't work!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### to generate a matrix of normalized FPKM values across all samples, like so:
 
 we’ll need the transcript length information, which we can extract from one of the RSEM.isoforms.results files like so
@@ -740,13 +811,33 @@ we’ll need the transcript length information, which we can extract from one of
 [aadas@bluemoon-user2 assemblyTrinity2.1.1]$ cat Brachyleytrum_precold03.genes.results | cut -f1,3,4 > tBrachyleytrum_lengths.txt
 ```
 
-
-
 ```
 ~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_TMM_normalization_write_FPKM_matrix.pl --matrix Brachyleytrum.genes.counts.matrix --lengths Brachyleytrum_lengths.txt
 ```
 
+the file ‘transcripts.counts.matrix.TMM_info.txt’ includes the results from running the TMM normalization step, and the new ‘effective’ library sizes (depth of read sequencing) are indicated. These adjusted library sizes are used to recompute the FPKM expression values, as provided in the file ‘Trinity_trans.counts.matrix.TMM_normalized.FPKM’. Although the raw fragment counts are used for differential expression analysis, the normalized FPKM values are used below in examining profiles of expression across different samples, and are shown in heatmaps and related expression plots.
 
+#### Extracting differentially expressed transcripts and generating heatmaps
+
+Extract those differentially expressed (DE) transcripts that are at least 4-fold differentially expressed at a significance of <= 0.001 in any of the pairwise sample comparisons:	
+
+```
+~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/analyze_diff_expr.pl --matrix Brachyleytrum.genes.TMM.EXPR.matrix –P 1e-3 –C2 --output  
+```
+
+​			
+
+```
+~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/analyze_diff_expr.pl --matrix Brachyleytrum.genes.counts.matrix.TMM_normalized.FPKM –P 1e-3 –C2
+```
+
+​		
+​	
+
+
+​			
+​		
+​	
 
 
 ​			
