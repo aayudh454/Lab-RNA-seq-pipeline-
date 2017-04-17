@@ -682,13 +682,7 @@ abline(fit, col='green', lwd=3)
 
 ![Rplot01](/Users/aayudhdas/Desktop/Rplot01.tiff)
 
-The linear regression allows us to extrapolate (based on the Y-intercept) that we have 19361 'genes', which is a far better guess than our count of 52,624 'genes' having at least 1 TPM in any sample, and certainly better than the 1.4 million 'genes' that were assembled.
-
-```
-~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix|m Brachyleytrum.genes.counts.matrix --method DESeq2 --min_rowSum_counts --output|o Bra 
-```
-
-### 
+The linear regression allows us to extrapolate (based on the Y-intercept) that we have 19361 'genes', which is a far better guess than our count of 52,624 'genes' having at least 1 TPM in any sample, and certainly better than the 1.4 million 'genes' that were assembled. 
 
 ------
 
@@ -699,7 +693,7 @@ The linear regression allows us to extrapolate (based on the Y-intercept) that w
 First lets get 'R' working
 
 ```
-[aadas@bluemoon-user2 ~]$ module load r-3.3.2-gcc-6.3.0-bmdvb4s
+q[aadas@bluemoon-user2 ~]$ module load r-3.3.2-gcc-6.3.0-bmdvb4s
 ```
 
 ```
@@ -716,3 +710,49 @@ R
 
 
 
+```
+~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix|m Brachyleytrum.genes.counts.matrix --method DESeq2 --min_rowSum_counts --output|o Bra 
+```
+
+```
+~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix Brachyleytrum.genes.counts.matrix --method DESeq2 --min_rowSum_counts 2 --output Brachyleytrum_deseq2
+```
+
+### Identifying DE Features: No Biological Replicates (Proceed with Caution)	
+
+First lets get 'R' working	
+
+```
+module load r-3.3.2-gcc-6.3.0-bmdvb4s
+```
+
+now, run edgeR via the helper script provided in the Trinity distribution:
+
+```
+~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix Brachyleytrum.genes.counts.matrix --method edgeR --dispersion 0.1 --output Brachyleytrum_edgeR
+```
+
+#### to generate a matrix of normalized FPKM values across all samples, like so:
+
+we’ll need the transcript length information, which we can extract from one of the RSEM.isoforms.results files like so
+
+```
+[aadas@bluemoon-user2 assemblyTrinity2.1.1]$ cat Brachyleytrum_precold03.genes.results | cut -f1,3,4 > tBrachyleytrum_lengths.txt
+```
+
+
+
+```
+~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_TMM_normalization_write_FPKM_matrix.pl --matrix Brachyleytrum.genes.counts.matrix --lengths Brachyleytrum_lengths.txt
+```
+
+
+
+
+​			
+​		
+​				
+​		
+​				
+​		
+​	
