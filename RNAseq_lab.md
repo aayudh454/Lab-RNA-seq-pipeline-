@@ -21,6 +21,8 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 * [Page 6 2017-04-13](#id-section6). Build Transcript and Gene Expression Matrices
 
+* [Page 7 2017-04-14](#id-section7). Build Transcript and Gene Expression Matrices
+
   ​
 
 ------
@@ -708,33 +710,15 @@ R
  > install.packages('ape')
 ```
 
+### Identifying DE Features: No Biological Replicates 	
 
-
-```
-~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix|m Brachyleytrum.genes.counts.matrix --method DESeq2 --min_rowSum_counts --output|o Bra 
-```
-
-```
-~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix Brachyleytrum.genes.counts.matrix --method DESeq2 --min_rowSum_counts 2 --output Brachyleytrum_deseq2
-```
-
-
-
-
-
-------
-
-<div id='id-section8'/>
-
-### Page 8: 2017-04-17. Differential Expression Analysis edgeR
-
-### Identifying DE Features: No Biological Replicates (Proceed with Caution)	
-
-First lets get 'R' working	
+### First lets get 'R' working		
 
 ```
 module load r-3.3.2-gcc-6.3.0-bmdvb4s
 ```
+
+It's very important to have biological replicates to power DE detection and reduce false positive predictions. If you do not have biological replicates, edgeR will allow you to perform DE analysis if you manually set the --dispersion parameter. Values for the **dispersion parameter** must be chosen carefully, and you might begin by exploring values between **0.1 and 0.4**.
 
 now, run edgeR via the helper script provided in the Trinity distribution:
 
@@ -778,6 +762,36 @@ The [Glimma](https://bioconductor.org/packages/release/bioc/html/Glimma.html) 
 ```
 
 ### didn't work!
+
+### Extracting and clustering differentially expressed transcripts
+
+An initial step in analyzing differential expression is to extract those transcripts that are most differentially expressed (most significant FDR and fold-changes) and to cluster the transcripts according to their patterns of differential expression across the samples. 
+
+```
+~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/analyze_diff_expr.pl --matrix Brachyleytrum.genes.counts.matrix -P 1e-3 -C 2 --samples samples_described.txt
+```
+
+you might need to update the q value in library.
+
+which will extract all genes that have P-values at most 1e-3 and are at least 2^2 fold differentially expressed. For each of the earlier pairwise DE comparisons, this step will generate the following files:
+
+## Gene Ontology (GO) Enrichment Analysis on Differentially Expressed Genes
+
+There are three different methods for partitioning genes into clusters:
+
+- use K-means clustering to define K gene sets. (use the -K parameter). This does not leverage the already hierarchically clustered genes as shown in the heatmap, and instead uses a least-sum-of-squares method to define exactly k gene clusters.
+- cut the hierarchically clustered genes (as shown in the heatmap) into exactly K clusters.
+- (Recommended) cut the hierarchically clustered gene tree at --Ptree percent height of the tree.
+
+```
+~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/define_clusters_by_cutting_tree.pl -R diffExpr.P1e-3_C2.matrix.RData --Ptree 60
+```
+
+A directory will be created called: 'diffExpr.P0.001_C2.matrix.RData.clusters_fixed_P_60' that contains the expression matrix for each of the clusters (log2-transformed, median centered). A summary pdf file is provided as 'my_cluster_plots.pdf' that shows the expression patterns for the genes in each cluster. Each gene is plotted (gray) in addition to the mean expression profile for that cluster (blue), as shown below:
+
+
+
+
 
 
 
