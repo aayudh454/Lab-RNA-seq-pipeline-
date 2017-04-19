@@ -848,8 +848,13 @@ Extract those differentially expressed (DE) transcripts that are at least 4-fold
 ​		
 ​	
 
+#### Annotation
 
-​			
+```
+[aadas@bluemoon-user2 annotation]$ /users/a/a/aadas/Bin/TransDecoder-3.0.1/TransDecoder.LongOrfs -t Brachyleytrum_trinityv211.fasta
+```
+
+​
 ​		
 ​	
 
