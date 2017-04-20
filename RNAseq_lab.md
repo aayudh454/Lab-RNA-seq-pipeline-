@@ -662,7 +662,7 @@ data = read.table("Brachyleytrum.genes.TPM.not_cross_norm.counts_by_min_TPM", he
 plot(data, xlim=c(-100,0), ylim=c(0,100000), t='b')
 ```
 
-![Rplot](/Users/aayudhdas/Desktop/Rplot.tiff)
+![alt tag](https://github.com/aayudh454/Lab-RNA-seq-pipeline-/blob/master/Rplot.tiff)
 
 ```
 # extract the data between 10 TPM and 100 TPM
