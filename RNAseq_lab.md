@@ -755,6 +755,8 @@ Any of the available methods support analyses containing biological replicates. 
 ~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix Brachyleytrum.genes.counts.matrix --method voom --samples_file samples_described.txt  
 ```
 
+![alt tag](https://github.com/aayudh454/Lab-RNA-seq-pipeline-/blob/master/Brachyleytrum.genes.counts.matrix.conditionA_vs_conditionB.voom.DE_results.MA_n_Volcano.pdf)
+
 ### Interactive Volcano and MA Plots using Glimma
 
 The [Glimma](https://bioconductor.org/packages/release/bioc/html/Glimma.html) software provides interactive plots. Generate volcano and MA-plots for any of your pairwise DE analysis results like so:
