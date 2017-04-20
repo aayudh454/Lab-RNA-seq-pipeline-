@@ -728,6 +728,10 @@ now, run edgeR via the helper script provided in the Trinity distribution:
 ~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix Brachyleytrum.genes.counts.matrix --method edgeR --dispersion 0.1 --output Brachyleytrum_edgeR
 ```
 
+**Brachyleytrum_coldshock01_vs_Brachyleytrum_coldshock02**
+
+![alt tag] (https://github.com/aayudh454/Lab-RNA-seq-pipeline-/blob/master/Brachyleytrum.genes.counts.matrix.Brachyleytrum_coldshock01_vs_Brachyleytrum_coldshock02.edgeR.DE_results.MA_n_Volcano.pdf)
+
 ### Identifying DE features: With biological replicates (PREFERRED)
 
 Be sure to have a tab-delimited 'samples_described.txt' file that describes the relationship between samples and replicates. For example:
