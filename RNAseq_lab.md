@@ -802,6 +802,62 @@ A directory will be created called: 'diffExpr.P0.001_C2.matrix.RData.clusters_fi
 
 
 
+​	
+
+#### Annotation
+
+```
+[aadas@bluemoon-user2 annotation]$ /users/a/a/aadas/Bin/TransDecoder-3.0.1/TransDecoder.LongOrfs -t Brachyleytrum_trinityv211.fasta
+```
+
+Trinotate **relies heavily on SwissProt and Pfam**, and custom protein files are generated as described below to be specifically used with Trinotate. You can obtain the protein database files by running this Trinotate build process. This step will download several data resources including the latest version of swissprot, pfam, and other companion resources, create and populate a Trinotate boilerplate sqlite database (Trinotate.sqlite), and yield *uniprot_sprot.pep* file to be used with BLAST, and the *Pfam-A.hmm.gz* file to be used for Pfam searches. Run the build process like so:
+
+```
+[aadas@bluemoon-user2 Trinotate-3.0.2]$ ~/Bin/Trinotate-3.0.2/admin/Build_Trinotate_Boilerplate_SQLite_db.pl Trinotate
+```
+
+and once it completes, it will provide to you:
+
+```
+Trinotate.sqlite
+uniprot_sprot.pep
+Pfam-A.hmm.gz
+```
+
+Prepare the protein database for blast searches by:	
+
+```
+[aadas@bluemoon-user2 Trinotate-3.0.2]$ ~/Bin/Trinotate-3.0.2/admin/Build_Trinotate_Boilerplate_SQLite_db.pl makeblastdb -in uniprot_sprot.pep -dbtype prot
+```
+
+script
+
+```
+#!/bin/bash
+
+######## This job needs 1 nodes, 4 processors total
+#PBS -l nodes=1:ppn=4,pmem=8gb,pvmem=9gb
+#PBS -l walltime=30:00:00
+#PBS -N outprecold
+#PBS -j oe
+#PBS -M aadas@uvm.edu
+#PBS -m bea
+
+# This single line using the blastp command below will compare your transcript fasta file
+# (-query) to the already formatted uniref90 database (-db).
+# You can enter 'blastp --help' for a list of the parameters.
+# We choose the tab-delimited output format (6) and to only help the top hit (-max_target_seqs)
+# and only if it has a minimum evalue of 0.001.
+
+blastp -query /users/a/a/aadas/annotation/Brachyleytrum_trinityv211.fasta.transdecoder_dir/longest_orfs.pep \
+       -db 
+       /users/a/a/aadas/Bin/Trinotate-3.0.2/uniprot_sprot.pep \
+       -out 
+       /users/a/a/aadas/annotation/blastp_vs_uniprot.outfmt6 \
+       -outfmt 6 \
+       -evalue 1e-3 \
+       -max_target_seqs 1
+```
 
 
 
@@ -819,11 +875,14 @@ A directory will be created called: 'diffExpr.P0.001_C2.matrix.RData.clusters_fi
 
 
 
+​			
+​		
+​				
+​		
+​				
+​		
 
-
-
-
-
+## Extra
 
 #### to generate a matrix of normalized FPKM values across all samples, like so:
 
@@ -854,23 +913,4 @@ Extract those differentially expressed (DE) transcripts that are at least 4-fold
 ```
 
 ​		
-​	
 
-#### Annotation
-
-```
-[aadas@bluemoon-user2 annotation]$ /users/a/a/aadas/Bin/TransDecoder-3.0.1/TransDecoder.LongOrfs -t Brachyleytrum_trinityv211.fasta
-```
-
-​
-​		
-​	
-
-
-​			
-​		
-​				
-​		
-​				
-​		
-​	
