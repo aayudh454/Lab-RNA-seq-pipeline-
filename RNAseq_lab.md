@@ -21,7 +21,7 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 * [Page 6 2017-04-13](#id-section6). Build Transcript and Gene Expression Matrices
 
-* [Page 7 2017-04-14](#id-section7). Build Transcript and Gene Expression Matrices
+* [Page 7 2017-04-14](#id-section7). Differential Expression Analysis
 
   ​
 
