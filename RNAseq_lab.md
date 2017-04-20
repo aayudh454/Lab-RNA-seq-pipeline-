@@ -664,6 +664,8 @@ plot(data, xlim=c(-100,0), ylim=c(0,100000), t='b')
 
 ![alt tag](https://github.com/aayudh454/Lab-RNA-seq-pipeline-/blob/master/Rplot.tiff)
 
+![Rplot](/Users/aayudhdas/Desktop/Lab-RNA-seq-pipeline-/Rplot.tiff)
+
 ```
 # extract the data between 10 TPM and 100 TPM
 filt_data = data[data[,1] > -100 & data[,1] < -10,] 
@@ -682,7 +684,7 @@ Coefficients:
 abline(fit, col='green', lwd=3)
 ```
 
-![Rplot01](/Users/aayudhdas/Desktop/Rplot01.tiff)
+![Rplot01](/Users/aayudhdas/Desktop/Lab-RNA-seq-pipeline-/Rplot01.tiff)
 
 The linear regression allows us to extrapolate (based on the Y-intercept) that we have 19361 'genes', which is a far better guess than our count of 52,624 'genes' having at least 1 TPM in any sample, and certainly better than the 1.4 million 'genes' that were assembled. 
 
