@@ -799,10 +799,13 @@ A directory will be created called: 'diffExpr.P0.001_C2.matrix.RData.clusters_fi
 
 
 
+------
 
+<div id='id-section8'/>
 
+### Page 8: 2017-04-20. Annotation
 
-​	
+Follow this link-http://trinotate.github.io/
 
 #### Annotation
 
@@ -830,7 +833,7 @@ Prepare the protein database for blast searches by:
 [aadas@bluemoon-user2 Trinotate-3.0.2]$ ~/Bin/Trinotate-3.0.2/admin/Build_Trinotate_Boilerplate_SQLite_db.pl makeblastdb -in uniprot_sprot.pep -dbtype prot
 ```
 
-script
+script to do the analysis
 
 ```
 #!/bin/bash
@@ -838,7 +841,7 @@ script
 ######## This job needs 1 nodes, 4 processors total
 #PBS -l nodes=1:ppn=4,pmem=8gb,pvmem=9gb
 #PBS -l walltime=30:00:00
-#PBS -N outprecold
+#PBS -N blastp
 #PBS -j oe
 #PBS -M aadas@uvm.edu
 #PBS -m bea
@@ -849,17 +852,15 @@ script
 # We choose the tab-delimited output format (6) and to only help the top hit (-max_target_seqs)
 # and only if it has a minimum evalue of 0.001.
 
-blastp -query /users/a/a/aadas/annotation/Brachyleytrum_trinityv211.fasta.transdecoder_dir/longest_orfs.pep \
-       -db 
-       /users/a/a/aadas/Bin/Trinotate-3.0.2/uniprot_sprot.pep \
-       -out 
-       /users/a/a/aadas/annotation/blastp_vs_uniprot.outfmt6 \
+export PATH="/users/a/a/aadas/Bin/ncbi-blast-2.6.0+/bin:$PATH"
+
+blastp -query /users/a/a/aadas/annotation/blastp/Brachyleytrum_orfs.pep \
+       -db /users/a/a/aadas/annotation/blastp/uniprot_sprot.pep \
+       -out /users/a/a/aadas/annotation/blastp/blastp_vs_uniprot.outfmt6 \
        -outfmt 6 \
        -evalue 1e-3 \
        -max_target_seqs 1
 ```
-
-
 
 
 
