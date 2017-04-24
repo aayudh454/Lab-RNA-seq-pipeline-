@@ -913,3 +913,21 @@ cat head_poch_uniprot_GO_nr_immune.txt poch_uniprot_GO_nr_immune.txt > immune.tx
 
 [aadas@pbio381 ~]$ /data/popgen/TransDecoder-3.0.1/TransDecoder.LongOrfs -t Phel_transcriptome_clc_v3.fasta
 
+**make the database** 
+
+```
+makeblastdb -in Pycnopodia_longest_orfs.pep -dbtype prot
+```
+
+**Script to work on**
+
+```
+#!/bin/bash
+
+blastp -query ~/Pisaster_longest_orfs.pep \
+       -db ~/Pycnopodia_longest_orfs.pep \
+       -out ~/Pisaster_vs_Pycnopodia.outfmt6 \
+       -outfmt 6 \
+       -evalue 1e-3 \
+       -max_target_seqs 1
+```
