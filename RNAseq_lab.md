@@ -883,35 +883,33 @@ blastp -query /users/a/a/aadas/annotation/blastp/Brachyleytrum_orfs.pep \
 ​				
 ​		
 
-## Extra
 
-#### to generate a matrix of normalized FPKM values across all samples, like so:
 
-we’ll need the transcript length information, which we can extract from one of the RSEM.isoforms.results files like so
+/data/popgen/TransDecoder-3.0.1
 
-```
-[aadas@bluemoon-user2 assemblyTrinity2.1.1]$ cat Brachyleytrum_precold03.genes.results | cut -f1,3,4 > tBrachyleytrum_lengths.txt
-```
+**So, how many genes related to immune response?**
 
-```
-~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/run_TMM_normalization_write_FPKM_matrix.pl --matrix Brachyleytrum.genes.counts.matrix --lengths Brachyleytrum_lengths.txt
-```
+[aadas@pbio381 ~]$ grep "immune" poch_uniprot_GO_nr.txt | wc -l
 
-the file ‘transcripts.counts.matrix.TMM_info.txt’ includes the results from running the TMM normalization step, and the new ‘effective’ library sizes (depth of read sequencing) are indicated. These adjusted library sizes are used to recompute the FPKM expression values, as provided in the file ‘Trinity_trans.counts.matrix.TMM_normalized.FPKM’. Although the raw fragment counts are used for differential expression analysis, the normalized FPKM values are used below in examining profiles of expression across different samples, and are shown in heatmaps and related expression plots.
+279
 
-#### Extracting differentially expressed transcripts and generating heatmaps
+[aadas@pbio381 ~]$ grep "immun*" poch_uniprot_GO_nr.txt | wc -l
 
-Extract those differentially expressed (DE) transcripts that are at least 4-fold differentially expressed at a significance of <= 0.001 in any of the pairwise sample comparisons:	
+321
 
-```
-~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/analyze_diff_expr.pl --matrix Brachyleytrum.genes.TMM.EXPR.matrix –P 1e-3 –C2 --output  
-```
+**put it in a text file**
 
-​			
+grep "immun*" poch_uniprot_GO_nr.txt > poch_uniprot_GO_nr_immune.txt
 
-```
-~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/analyze_diff_expr.pl --matrix Brachyleytrum.genes.counts.matrix.TMM_normalized.FPKM –P 1e-3 –C2
-```
+**Now you need the header**
 
-​		
+head poch_uniprot_GO_nr.txt -n 1 > head_poch_uniprot_GO_nr_immune.txt
+
+Make a file including the header
+
+cat head_poch_uniprot_GO_nr_immune.txt poch_uniprot_GO_nr_immune.txt > immune.txt
+
+**Now from UPS and ARMS paper FASTA file**
+
+[aadas@pbio381 ~]$ /data/popgen/TransDecoder-3.0.1/TransDecoder.LongOrfs -t Phel_transcriptome_clc_v3.fasta
 
