@@ -23,7 +23,7 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 * [Page 7 2017-04-14](#id-section7). Differential Expression Analysis
 
-* [Page 8 2017-04-20](#id-section8). Coding Region Identification in Trinity Assemblies
+* [Page 8 2017-04-25](#id-section8). Coding Region Identification in Trinity Assemblies
 
   ​
 
@@ -805,7 +805,7 @@ A directory will be created called: 'diffExpr.P0.001_C2.matrix.RData.clusters_fi
 
 <div id='id-section8'/>
 
-### Page 8: 2017-04-20. Coding Region Identification in Trinity Assemblies
+### Page 8: 2017-04-25. Coding Region Identification in Trinity Assemblies
 
 Follow this link-http://transdecoder.github.io/
 
@@ -862,6 +862,8 @@ blastp -query /users/a/a/aadas/annotation/long_ORF/longest_orfs.pep \
 
 now **bash** the script
 
+### BlastP Search
+
 If you want to submit as a job to VACC
 
 ```
@@ -885,14 +887,27 @@ blastp -query /users/a/a/aadas/annotation/long_ORF/longest_orfs.pep \
        -max_target_seqs 1
 ```
 
+### Pfam Search
 
+Search the peptides for protein domains using Pfam. This requires [hmmer3](http://hmmer.janelia.org/) and [Pfam](ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.gz) databases to be installed.
 
-
-
-
+Briefly, to compile HMMER from source:
 
 ```
-blastp -query /users/a/a/aadas/annotation/long_ORF/longest_orfs.pep -db /users/a/a/aadas/annotation/uniprot/uniprot_sprot.fasta  -max_target_seqs 1 -outfmt 6 -evalue 1e-5 -num_threads 10 > blastp.outfmt6
+  % tar zxvf hmmer-3.1b2-linux-intel-x86_64.tar.gz
+  % cd hmmer-3.1b2
+  % ./configure
+  % make
+  % make check
+```
+
+Pfam-
+
+```
+
+export PATH=$PATH:/users/a/a/aadas/Bin/hmmer-3.1b2-linux-intel-x86_64/binaries
+
+hmmscan --cpu 8 --domtblout pfam.domtblout /users/a/a/aadas/Bin/Pfam-A.hmm /users/a/a/aadas/annotation/long_ORF/longest_orfs.pep
 ```
 
 
