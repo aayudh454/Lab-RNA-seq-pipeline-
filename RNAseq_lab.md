@@ -891,7 +891,7 @@ blastp -query /users/a/a/aadas/annotation/long_ORF/longest_orfs.pep \
 
 Search the peptides for protein domains using Pfam. This requires [hmmer3](http://hmmer.janelia.org/) and [Pfam](ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.gz) databases to be installed.
 
-Briefly, to compile HMMER from source:
+**Briefly, to compile HMMER from source:**
 
 ```
   % tar zxvf hmmer-3.1b2-linux-intel-x86_64.tar.gz
@@ -901,7 +901,14 @@ Briefly, to compile HMMER from source:
   % make check
 ```
 
-Pfam-
+**Pfam-**
+
+Uncompress and prepare the Pfam database for use with *hmmscan* like so:
+
+```
+gunzip Pfam-A.hmm.gz
+hmmpress Pfam-A.hmm
+```
 
 ```
 
@@ -910,7 +917,31 @@ export PATH=$PATH:/users/a/a/aadas/Bin/hmmer-3.1b2-linux-intel-x86_64/binaries
 hmmscan --cpu 8 --domtblout pfam.domtblout /users/a/a/aadas/Bin/Pfam-A.hmm /users/a/a/aadas/annotation/long_ORF/longest_orfs.pep
 ```
 
+### Step 1
 
+```
+#!/bin/bash
+
+#PBS -N out.transDecoder-step1
+#PBS -l nodes=1:ppn=4,pmem=10G,pvmem=12g
+#PBS -j oe
+#PBS -l walltime=10:00:00
+#PBS -M aadas@uvm.edu
+#PBS -m bea
+
+export PATH="/users/a/a/aadas/Bin/TransDecoder-3.0.1/transdecoder_plugins/cdhit:$PATH"
+export PATH="/users/a/a/aadas/Bin/TransDecoder-3.0.1:$PATH"
+export PATH="/users/a/a/aadas/Bin/hmmer-3.1b2-linux-intel-x86_64/binaries:$PATH"
+export PATH="/users/a/a/aadas/Bin/ncbi-blast-2.6.0+/bin:$PATH"
+
+transDecoder_dir=/users/a/a/aadas/Bin/TransDecoder-3.0.1
+INPUT_DIR=/users/a/a/aadas/blast_Brachyleytrum
+cd $INPUT_DIR
+
+$transDecoder_dir/TransDecoder.LongOrfs -t $INPUT_DIR/Brachyleytrum_trinityv211.fasta
+```
+
+### Step 2
 
 
 
