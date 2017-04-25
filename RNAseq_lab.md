@@ -23,6 +23,8 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 * [Page 7 2017-04-14](#id-section7). Differential Expression Analysis
 
+* [Page 8 2017-04-20](#id-section8). Coding Region Identification in Trinity Assemblies
+
   ​
 
 ------
@@ -803,15 +805,107 @@ A directory will be created called: 'diffExpr.P0.001_C2.matrix.RData.clusters_fi
 
 <div id='id-section8'/>
 
-### Page 8: 2017-04-20. Annotation
+### Page 8: 2017-04-20. Coding Region Identification in Trinity Assemblies
 
-Follow this link-http://trinotate.github.io/
+Follow this link-http://transdecoder.github.io/
 
-#### Annotation
+The *TransDecoder* utility is run on a fasta file containing the target transcript sequences. The simplest usage is as follows:
+
+Step 1: extract the **long open reading frames**
 
 ```
 [aadas@bluemoon-user2 annotation]$ /users/a/a/aadas/Bin/TransDecoder-3.0.1/TransDecoder.LongOrfs -t Brachyleytrum_trinityv211.fasta
 ```
+
+Step 2 predict the **likely coding regions**
+
+```
+/users/a/a/aadas/Bin/TransDecoder-3.0.1/TransDecoder.Predict -t Brachyleytrum_trinityv211.fasta
+```
+
+#### Install blast
+
+go to-ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/  
+
+Download **linux.tar.gz**
+
+```
+$ export PATH=$PATH:/users/a/a/aadas/Bin/ncbi-blast-2.6.0+/bin
+```
+
+**make the database**
+
+```
+[aadas@bluemoon-user2 uniprot]$ makeblastdb -in uniprot_sprot.pep -dbtype prot
+```
+
+**script**
+
+This single line using the blastp command below will compare your transcript fasta file
+
+(-query) to the already formatted uniref90 database (-db).
+
+You can enter 'blastp --help' for a list of the parameters.
+
+We choose the tab-delimited output format (6) and to only help the top hit (-max_target_seqs) and only if it has a minimum evalue of 0.001.
+
+```
+#!/bin/bash
+
+blastp -query /users/a/a/aadas/annotation/long_ORF/longest_orfs.pep \
+       -db /users/a/a/aadas/annotation/uniprot/uniprot_sprot.pep \
+       -out ~/Brachy_vs_uniprot.outfmt6 \
+       -outfmt 6 \
+       -evalue 1e-3 \
+       -max_target_seqs 1
+```
+
+now **bash** the script
+
+If you want to submit as a job to VACC
+
+```
+#!/bin/bash
+
+######## This job needs 1 nodes, 4 processors total
+#PBS -l nodes=1:ppn=4,pmem=8gb,pvmem=9gb
+#PBS -l walltime=30:00:00
+#PBS -N blastp
+#PBS -j oe
+#PBS -M aadas@uvm.edu
+#PBS -m bea
+
+export PATH=$PATH:/users/a/a/aadas/Bin/ncbi-blast-2.6.0+/bin
+
+blastp -query /users/a/a/aadas/annotation/long_ORF/longest_orfs.pep \
+       -db /users/a/a/aadas/annotation/uniprot/uniprot_sprot.pep \
+       -out ~/Brachy_vs_uniprot.outfmt6 \
+       -outfmt 6 \
+       -evalue 1e-3 \
+       -max_target_seqs 1
+```
+
+
+
+
+
+
+
+```
+blastp -query /users/a/a/aadas/annotation/long_ORF/longest_orfs.pep -db /users/a/a/aadas/annotation/uniprot/uniprot_sprot.fasta  -max_target_seqs 1 -outfmt 6 -evalue 1e-5 -num_threads 10 > blastp.outfmt6
+```
+
+
+
+
+
+
+
+
+
+
+
+Follow this link-http://trinotate.github.io/
 
 Trinotate **relies heavily on SwissProt and Pfam**, and custom protein files are generated as described below to be specifically used with Trinotate. You can obtain the protein database files by running this Trinotate build process. This step will download several data resources including the latest version of swissprot, pfam, and other companion resources, create and populate a Trinotate boilerplate sqlite database (Trinotate.sqlite), and yield *uniprot_sprot.pep* file to be used with BLAST, and the *Pfam-A.hmm.gz* file to be used for Pfam searches. Run the build process like so:
 
