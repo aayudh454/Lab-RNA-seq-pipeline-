@@ -941,7 +941,89 @@ cd $INPUT_DIR
 $transDecoder_dir/TransDecoder.LongOrfs -t $INPUT_DIR/Brachyleytrum_trinityv211.fasta
 ```
 
-### Step 2
+### Step 2 (run two scripts)
+
+```
+#!/usr/bin/perl
+use strict;
+use warnings;
+use Getopt::Long;
+
+
+my $file;               #BLAST query sequences
+my $size= 2000;         #Number of sequences per task
+my $type;               #Blast program.
+my $database;           #path to database
+my $eval= 1e-5;         #BLAST e-value cutoff
+my $outputFormat= 6;    #BLAST output format
+my $outputDir="blast_out";      #output directory
+my $help;
+my $input_dir=`pwd`;
+my $blast_dir="/users/a/a/aadas/Bin/ncbi-blast-2.6.0+/bin";
+my $hmm_dir="/users/a/a/aadas/Bin/hmmer-3.1b2-linux-intel-x86_64/binaries";
+my $hmmDB_dir="/users/a/a/aadas/blast_Brachyleytrum/database";
+my $hmm="hmmscan";
+my $hmmoutputDir="hmmscan_out";
+GetOptions(
+        'query=s'       => \$file,
+        'num_seqs=i'    => \$size,
+        'program=s'     => \$type,
+        'database=s'    => \$database,
+        'eval=f'        => \$eval,
+        'm=i'           => \$outputFormat,
+        'output_dir=s'  => \$outputDir,
+#       'rcc_queue=s'   => \$queue,
+#       'combine'       => \$autoCombine,
+        'help'          => \$help
+);
+
+my $usage = <<__EOUSAGE__;
+
+###################################################################################
+#       Batch Blast: Task Array
+###################################################################################
+#
+#  --query <string>             File containing query sequences
+# 
+#  --program <string>           The BLAST program to use
+#
+#  --database <string>          The location of the BLAST database
+#
+# Optional:
+# 
+#  --num_seqs <integer>         The number of sequences per data sub-set
+#                               Default: 1000
+#
+#  --eval <float>               The BLAST e-value cutoff
+#                               Default: 1e-10
+#
+#  --m <integer>                BLAST output format (8 for tablular)
+#                               Default: 8 - Tabular Output
+```
+
+then
+
+```
+#!/bin/bash
+cd `pwd`
+
+perl batch_blastp_hmmscan.pl -q Brachyleytrum_trinityv211.fasta.transdecoder_dir/longest_orfs.pep -p blastp -d /users/a/a/aadas/blast_Brachyleytrum/database/uniprot_sprot.pep
+
+chmod 700 *.sh
+for i in blastp-part*; do
+  qsub $i &
+done
+
+for i in hmmscan-part*; do
+  qsub $i &
+done
+```
+
+Run-
+
+```
+./run_blastp_hmmscan.sh
+```
 
 
 
