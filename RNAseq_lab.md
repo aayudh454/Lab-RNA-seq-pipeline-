@@ -1163,13 +1163,67 @@ Run-
 ./run_blastp_hmmscan.sh
 ```
 
+### Final step
 
+```
+#!/bin/bash
+#PBS -N out.finalstep1
+#PBS -l nodes=1:ppn=1,pmem=10G,pvmem=12g
+#PBS -j oe
+#PBS -l walltime=12:00:00
+#PBS -M aadas@uvm.edu
+#PBS -m bea
 
+export PATH="/users/a/a/aadas/Bin/TransDecoder-3.0.1/transdecoder_plugins/cdhit:$PATH"
+export PATH="/users/a/a/aadas/Bin/TransDecoder-3.0.1:$PATH"
+export PATH="/users/a/a/aadas/Bin/hmmer-3.1b2-linux-intel-x86_64/binaries:$PATH"
+export PATH="/users/a/a/aadas/Bin/ncbi-blast-2.6.0+/bin:$PATH"
 
+transDecoder_dir=/users/a/a/aadas/Bin/TransDecoder-3.0.1
+INPUT_DIR=/users/a/a/aadas/blast_Brachyleytrum
+cd $INPUT_DIR
+######################################################################
+###concatenate outputs for blastp and hmmscan searches
+#####################################################################
+cat blast_out/split.* > blastp.outfmt6
+cat hmmscan_out/* > pfam.domtblout
+####################################################################################################
+####remove files that are no longer needed
+###################################################################################################
+rm -r split.* blastp-part-* hmmscan-part-*
+#####################################################################################################
+###submit final step of TransDecoder searching for potential coding regions of the transcripts
+#####################################################################################################
+$transDecoder_dir/TransDecoder.Predict -t $INPUT_DIR/Brachyleytrum_trinityv211.fasta --retain_pfam_hits pfam.domtblout --retain_blastp_hits blastp.outfmt6
+```
 
+------
 
+<div id='id-section9'/>
 
+### Page 9: 2017-05-02. Principal Component Analysis (PCA)
 
+Another important analysis method to explore relationships among the sample replicates is Principal Component Analysis (PCA). You can generate a PCA plot like so:
+
+```
+[aadas@bluemoon-user2 pcaplots]$ module load r-3.3.2-gcc-6.3.0-bmdvb4s
+```
+
+```
+~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/PtR --matrix Trinity_trans.counts.matrix \
+    -s samples.txt --log2 --prin_comp 3
+```
+
+```
+ %  ~/Bin/trinityrnaseq-2.1.1/Analysis/DifferentialExpression/PtR --matrix Brachyleytrum.genes.counts.matrix \
+    -s samples_described.txt --log2 --prin_comp 3
+```
+
+The --prin_comp 3 indicates that the first three principal components will be plotted, as shown above, with PC1 vs. PC2 and PC2 vs. PC3. In this example, the replicates cluster tightly according to sample type, which is very reassuring.
+
+If you have replicates that are clear outliers, you might consider removing them from your study as potential confounders. If it's clear that you have a [batch effect](http://www.nature.com/nrg/journal/v11/n10/full/nrg2825.html), you'll want to eliminate the batch effect during your downstream analysis of differential expression.
+
+------------------
 
 Follow this link-http://trinotate.github.io/
 
