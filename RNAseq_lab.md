@@ -993,15 +993,153 @@ my $usage = <<__EOUSAGE__;
 # 
 #  --num_seqs <integer>         The number of sequences per data sub-set
 #                               Default: 1000
-#
-#  --eval <float>               The BLAST e-value cutoff
+#--eval <float>               The BLAST e-value cutoff
 #                               Default: 1e-10
 #
 #  --m <integer>                BLAST output format (8 for tablular)
 #                               Default: 8 - Tabular Output
+#
+#  --output_dir <string>        Output directory for BLAST results
+#                               Default: blast_out
+#
+#  --combine                    Automatically combine and remove the split.*
+#                               directories.
+#                               Default: False
+#
+#  --job_name_prefix            A prefix to differentiate this batch_blast run
+#                               from another.
+#                               
+#  --rcc_queue                  SGE queue to run the BLAST job on
+#                               Default: rcc-30d
+#
+#  --help  
+###################################################################################
+#  
+#  To pass other arguments to blastall use -- <args> AFTER all required
+#  arguments.
+#
+###################################################################################
+
+__EOUSAGE__
+;
+
+if(!$file || !$type || !$database || $help){
+        die($usage);
+}
+
+my $seqid;
+my $seq;
+
+my $seq_counter=0;
+my $split_count=1;
+
+open my $infile, "<", $file;
+while(<$infile>){
+        chomp;
+        #is this line a new sequence header?
+        if(/^>/){
+                #if there is a storred sequence then write it out to file first
+                if($seqid){
+                        mkdir "split.".$split_count;
+                        chdir ("split.$split_count");
+                        open my $OUT, ">>", "split.$split_count.fasta";
+                        print $OUT "$seqid\n$seq\n";
+                        close $OUT;
+                        if($seq_counter == $size){
+                                $seq_counter = 0;
+                                $split_count++;
+
+                        }
+                        chdir ("../");
+                }
+                $seq=();
+                $seqid = $_;
+                $seq_counter++;
+        }
+        #if not then keep building the sequence
+        else{
+                $seq .= $_;
+        }
+}
+}
+#necessarily this loop exits before the last sequence is written. Write it now.
+if($seqid){
+        mkdir "split.".$split_count;
+        chdir ("split.$split_count");
+        open my $OUTsplit, ">>", "split.$split_count.fasta";
+        print $OUTsplit "$seqid\n$seq\n";
+        close $OUTsplit;
+        if($seq_counter == $size){
+                $seq_counter = 0;
+                $split_count++;
+        }
+        chdir ("../");
+}
+close $infile;
+#if the output directory doesn't exist then make it
+if(! -e $outputDir){
+        `mkdir $outputDir`;
+}
+
+#print the task-array script
+for(my $i=1;$i<=$split_count;$i++){
+     open my $SUB_SCRIPTS, ">", "$type-part-$i.sh" or die();
+     print $SUB_SCRIPTS "#!/bin/bash\n",
+                        "#PBS -N out.$type.part-$i\n",
+                        "#PBS -l nodes=1:ppn=1,pmem=10G,pvmem=12g\n",
+                        "#PBS -j oe\n",
+                        "#PBS -l walltime=30:00:00\n",
+                        "#PBS -M aadas\@uvm.edu\n",
+                        "#PBS -m bea\n",
+                        "\n",
+                        "INPUT_DIR=$input_dir\n",
+                        "BLAST_DIR=$blast_dir\n",
+                        "cd \$INPUT_DIR\n",
+                        "\n",
+                        "\$BLAST_DIR/$type ",
+                        "-query \$INPUT_DIR/split.$i/split.$i.fasta ",
+                        "-db $database ",
+                        "-outfmt $outputFormat ",
+                        "-evalue $eval ",
+                        "-num_threads 1 ",
+                        "-max_target_seqs 1 ",
+                        "\> $outputDir/split.$i.$type",
+                        "\n",
+                        "exit\n";
+}
+}
+#print the task-array scripts hmmscan
+if(! -e $hmmoutputDir){
+        `mkdir $hmmoutputDir`;
+}
+
+for(my $i=1;$i<=$split_count;$i++){
+     open my $HMM_SCRIPTS, ">", "$hmm-part-$i.sh" or die();
+     print $HMM_SCRIPTS "#!/bin/bash\n",
+                        "#PBS -N out.$hmm.part-$i\n",
+                        "#PBS -l nodes=1:ppn=1,pmem=10G,pvmem=12g\n",
+                        "#PBS -j oe\n",
+                        "#PBS -l walltime=30:00:00\n",
+                        "#PBS -M aadas\@uvm.edu\n",
+                        "#PBS -m bea\n",
+                        "\n",
+                        "INPUT_DIR=$input_dir\n",
+                        "HMM_DIR=$hmm_dir\n",
+                        "cd \$INPUT_DIR\n",
+                        "\n",
+                        "\$HMM_DIR/$hmm ",
+                        "--cpu 1 ",
+                        "--domtblout $hmmoutputDir/split.$i.domtblout ",
+                        "$hmmDB_dir/Pfam-A.hmm ",
+                        "\$INPUT_DIR/split.$i/split.$i.fasta ",
+                        "\n",
+                        "exit\n";
+}
+#and submit it
+
 ```
 
-then
+Then (**When you run the 3rd script; generally it's submitting 300 jobs to VACC but it's not going to run; So, comment out blast-then it's only submitting hmm scan; Even if doesn't work then edit blast-part* and manually put part-1* then part-2*  **)
 
 ```
 #!/bin/bash
