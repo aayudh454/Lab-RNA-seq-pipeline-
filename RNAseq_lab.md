@@ -25,6 +25,8 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 * [Page 8 2017-04-25](#id-section8). Coding Region Identification in Trinity Assemblies
 
+* [Page 9 2017-05-02](#id-section9). Principal Component Analysis (PCA)
+
   ​
 
 ------
