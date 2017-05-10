@@ -1227,6 +1227,34 @@ If you have replicates that are clear outliers, you might consider removing them
 
 ------------------
 
+<div id='id-section10'/>
+
+### Page 10: 2017-10-02. Orthofinder setup
+
+#### some tips (If you want to upload a fle from desktop)
+
+first cd to Desktop
+
+```
+AAYUDHs-MacBook-Air:Desktop aayudhdas$ scp fastme-2.1.5.tar.gz aadas@bluemoon-user2.uvm.edu:~/Bin
+```
+
+#### 1. Get **MCL-edge software **
+
+https://micans.org/mcl/
+
+After you tar -zxvf
+
+```
+cd mcl-12-068
+./configure --prefix=$HOME/local
+make install
+```
+
+#### 2. FastME 2.0
+
+-------
+
 Follow this link-http://trinotate.github.io/
 
 Trinotate **relies heavily on SwissProt and Pfam**, and custom protein files are generated as described below to be specifically used with Trinotate. You can obtain the protein database files by running this Trinotate build process. This step will download several data resources including the latest version of swissprot, pfam, and other companion resources, create and populate a Trinotate boilerplate sqlite database (Trinotate.sqlite), and yield *uniprot_sprot.pep* file to be used with BLAST, and the *Pfam-A.hmm.gz* file to be used for Pfam searches. Run the build process like so:
