@@ -1231,6 +1231,8 @@ If you have replicates that are clear outliers, you might consider removing them
 
 ### Page 10: 2017-10-02. Orthofinder setup
 
+https://github.com/davidemms/OrthoFinder
+
 #### some tips (If you want to upload a fle from desktop)
 
 first cd to Desktop
@@ -1253,9 +1255,22 @@ make install
 
 #### 2. FastME 2.0
 
+```
+./configure
+make
+```
+
+
+
+#### 3. DLCpar
+
+https://www.cs.hmc.edu/~yjw/software/dlcpar/
+
 
 
 -------
+
+### Extra
 
 Follow this link-http://trinotate.github.io/
 
