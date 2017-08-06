@@ -27,8 +27,6 @@ Login info: **ssh aadas@bluemoon-user2.uvm.edu**
 
 * [Page 9 2017-05-02](#id-section9). Principal Component Analysis (PCA)
 
-  ​
-
 ------
 <div id='id-section1'/>
 ###Page 1: 2017-03-20. Moving files, basics and trimming
@@ -189,6 +187,27 @@ cd $workDIR
 #####TRIMMING COMMANDS AND PARAMETERS
 java -jar $SOFTWARE/trimmomatic-0.36.jar PE -phred33 $workDIR/Ba1x_precold.R1.fastq.gz $workDIR/Ba1x_precold.R2.fastq.gz $workDIR/Ba1x_precold.R1.trimmo.fq.gz $workDIR/Ba1x_precold.R1.unpaired.fq.gz $workDIR/Ba1x_precold.R2.trimmo.fq.gz $workDIR/Ba1x_precold.R2.unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE-2.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:5:20 MINLEN:40
 ```
+What does all this things actually mean?
+
+Based on the sequencing (paired end or signle end)  you need to follow this protocol BUT modify other factors! Don't copy deto!!!!!
+
+Paired End:
+
+java -jar trimmomatic-0.35.jar PE -phred33 input_forward.fq.gz input_reverse.fq.gz output_forward_paired.fq.gz output_forward_unpaired.fq.gz output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+This will perform the following:
+
+- Remove adapters (ILLUMINACLIP:TruSeq3-PE.fa:2:30:10)
+- Remove leading low quality or N bases (below quality 3) (LEADING:3)
+- Remove trailing low quality or N bases (below quality 3) (TRAILING:3)
+- Scan the read with a 4-base wide sliding window, cutting when the average quality per base drops below 15 (SLIDINGWINDOW:4:15)
+- Drop reads below the 36 bases long (MINLEN:36)
+
+Single End:
+
+java -jar trimmomatic-0.35.jar SE -phred33 input.fq.gz output.fq.gz ILLUMINACLIP:TruSeq3-SE:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+This will perform the same steps, using the single-ended adapter file
 
 i. You need to check **Submitting Jobs to the Cluster**-
 
@@ -1322,27 +1341,3 @@ blastp -query /users/a/a/aadas/annotation/blastp/Brachyleytrum_orfs.pep \
        -evalue 1e-3 \
        -max_target_seqs 1
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-​			
-​		
-​				
-​		
-​				
-​		
-
-
-
